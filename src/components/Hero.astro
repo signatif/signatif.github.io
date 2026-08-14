@@ -1,0 +1,91 @@
+---
+import SealMark from './SealMark.astro';
+---
+<section id="top" class="relative overflow-hidden">
+  <div class="mx-auto grid max-w-6xl gap-16 px-6 pb-20 pt-16 md:pt-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+    <div>
+      <p class="font-mono text-xs uppercase tracking-[0.25em] text-seal-600 dark:text-seal-400">
+        Trust infrastructure for verifiable artifacts
+      </p>
+      <h1 class="mt-5 font-display text-5xl font-medium leading-[1.05] tracking-tight md:text-7xl">
+        Evidence,
+        <span class="italic text-seal-600 dark:text-seal-400">not faith.</span>
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-600 dark:text-parchment-200">
+        Signatif is an open framework for sealing, delegating, and verifying
+        artifacts in regulated industries. It replaces binary trust with
+        graduated, reproducible evidence — computed the same way by every
+        conforming verifier.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <a
+          href="https://github.com/CalConnect/cc-signatif"
+          class="rounded-full bg-seal-600 px-6 py-3 font-medium text-parchment-50 shadow-sm transition-colors hover:bg-seal-700 dark:bg-seal-500 dark:hover:bg-seal-600"
+        >
+          Read the standard
+        </a>
+        <a
+          href="#verifier"
+          class="rounded-full border border-ink-900/20 px-6 py-3 font-medium text-ink-800 transition-colors hover:border-seal-500 hover:text-seal-600 dark:border-parchment-100/25 dark:text-parchment-100 dark:hover:border-seal-400 dark:hover:text-seal-400"
+        >
+          Try the verifier
+        </a>
+      </div>
+      <p class="mt-10 font-mono text-xs text-ink-400 dark:text-parchment-300">
+        ISO/TC 154 · working draft · from Latin <span class="italic">signare</span>, "to mark with a seal"
+      </p>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-sm lg:max-w-none">
+      <div class="absolute inset-0 translate-x-3 translate-y-4 rotate-2 rounded-xl border border-ink-900/10 dark:border-parchment-100/10" aria-hidden="true"></div>
+      <div class="relative rounded-xl border border-ink-900/20 bg-parchment-50 p-6 shadow-sm dark:border-parchment-100/20 dark:bg-ink-900">
+        <div class="rounded-md border border-ink-900/15 p-5 dark:border-parchment-100/15">
+          <div class="flex items-center justify-between border-b border-dashed border-ink-900/15 pb-3 dark:border-parchment-100/15">
+            <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-400 dark:text-parchment-300">Trusted artifact</span>
+            <span class="font-mono text-[11px] text-brass-600 dark:text-brass-400">v1</span>
+          </div>
+          <dl class="mt-4 space-y-2.5 font-mono text-xs">
+            <div class="flex justify-between gap-4">
+              <dt class="text-ink-400 dark:text-parchment-300">chain</dt>
+              <dd class="text-right text-ink-700 dark:text-parchment-100">root-a → nmi → lab</dd>
+            </div>
+            <div class="flex justify-between gap-4">
+              <dt class="text-ink-400 dark:text-parchment-300">scope</dt>
+              <dd class="text-right text-ink-700 dark:text-parchment-100">metrology / class M</dd>
+            </div>
+            <div class="flex justify-between gap-4">
+              <dt class="text-ink-400 dark:text-parchment-300">dimensions</dt>
+              <dd class="text-right text-ink-700 dark:text-parchment-100">authority · person · time</dd>
+            </div>
+            <div class="flex justify-between gap-4">
+              <dt class="text-ink-400 dark:text-parchment-300">transparency</dt>
+              <dd class="text-right text-ink-700 dark:text-parchment-100">log #1041 · included</dd>
+            </div>
+            <div class="flex justify-between gap-4">
+              <dt class="text-ink-400 dark:text-parchment-300">freshness</dt>
+              <dd class="text-right text-ink-700 dark:text-parchment-100">within window</dd>
+            </div>
+          </dl>
+          <div class="mt-5 flex items-center justify-between border-t border-dashed border-ink-900/15 pt-3 dark:border-parchment-100/15">
+            <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-400 dark:text-parchment-300">Classification</span>
+            <span class="rounded-sm border border-brass-500/50 bg-brass-500/10 px-2 py-0.5 font-mono text-[11px] font-medium uppercase tracking-wider text-brass-600 dark:text-brass-400">certified</span>
+          </div>
+        </div>
+        <div class="absolute -bottom-7 -right-5 text-seal-600/90 dark:text-seal-400/90" aria-hidden="true">
+          <div class="rotate-[-10deg] rounded-full border-4 border-current p-2 opacity-90 shadow-lg">
+            <SealMark class="size-16" />
+          </div>
+        </div>
+      </div>
+      <div class="mt-14 flex items-center gap-2 font-mono text-[11px] text-ink-400 dark:text-parchment-300" aria-hidden="true">
+        <span class="size-1.5 rounded-full bg-seal-600 dark:bg-seal-400"></span>
+        <span class="h-px w-8 border-t border-dashed border-ink-900/30 dark:border-parchment-100/30"></span>
+        <span class="size-1.5 rounded-full bg-ink-400 dark:bg-parchment-300"></span>
+        <span class="h-px w-8 border-t border-dashed border-ink-900/30 dark:border-parchment-100/30"></span>
+        <span class="size-1.5 rounded-full bg-ink-400 dark:bg-parchment-300"></span>
+        <span class="ml-3 uppercase tracking-[0.2em]">delegation chain</span>
+      </div>
+    </div>
+  </div>
+  <div class="ledger-strip mx-auto max-w-6xl px-6 text-ink-900/25 dark:text-parchment-100/20" aria-hidden="true"></div>
+</section>

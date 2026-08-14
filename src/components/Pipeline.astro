@@ -1,0 +1,52 @@
+---
+const steps = [
+  {
+    n: '01',
+    title: 'Seal & delegate',
+    tag: 'artifact',
+    text: 'Authorities sign artifacts and delegate through a chain. Authorization scope narrows monotonically at every link.',
+  },
+  {
+    n: '02',
+    title: 'Verify',
+    tag: 'coverage report',
+    text: 'Hard checks short-circuit to rejected. Soft checks accumulate into an objective coverage report.',
+  },
+  {
+    n: '03',
+    title: 'Classify',
+    tag: 'classification label',
+    text: 'The scheme’s published policy maps the report to a label — a pure, deterministic function.',
+  },
+  {
+    n: '04',
+    title: 'Accept',
+    tag: 'acceptance policy',
+    text: 'The verifier’s own risk policy turns the label into a decision for its context.',
+  },
+];
+---
+<section id="pipeline" class="border-y border-ink-900/10 bg-parchment-50/60 dark:border-parchment-100/10 dark:bg-ink-900/40">
+  <div class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+    <p class="font-mono text-xs uppercase tracking-[0.25em] text-seal-600 dark:text-seal-400">02 — Verification</p>
+    <h2 class="mt-4 font-display text-3xl font-medium tracking-tight md:text-5xl">One pipeline. Three decisions.</h2>
+    <p class="mt-4 max-w-2xl text-ink-500 dark:text-parchment-200">
+      The standard separates what is verified, how it is graded, and whether
+      it is good enough — so schemes and verifiers can differ without
+      forking the machinery.
+    </p>
+    <ol class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+      {steps.map(({ n, title, tag, text }, i) => (
+        <li class="relative">
+          {i < steps.length - 1 && (
+            <span class="absolute left-full top-5 hidden h-px w-8 -translate-x-3 border-t-2 border-dashed border-seal-600/40 dark:border-seal-400/40 lg:block" aria-hidden="true"></span>
+          )}
+          <span class="grid size-10 place-items-center rounded-full border-2 border-seal-600 font-mono text-xs font-medium text-seal-600 dark:border-seal-400 dark:text-seal-400">{n}</span>
+          <h3 class="mt-5 font-semibold tracking-tight">{title}</h3>
+          <p class="mt-1 font-mono text-[11px] uppercase tracking-widest text-brass-600 dark:text-brass-400">{tag}</p>
+          <p class="mt-3 text-sm leading-relaxed text-ink-500 dark:text-parchment-300">{text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

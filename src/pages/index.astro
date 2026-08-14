@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Principles from '../components/Principles.astro';
+import Pipeline from '../components/Pipeline.astro';
+import VerifierDemo from '../components/VerifierDemo.vue';
+import Industries from '../components/Industries.astro';
+---
+<Layout
+  title="Signatif — Evidence, not faith."
+  description="Signatif is an open trust infrastructure framework for verifiable artifacts in regulated industries: sealed, interoperable, graduated, non-repudiable, anchored."
+>
+  <Hero />
+  <Principles />
+  <Pipeline />
+  <section id="verifier" class="mx-auto max-w-6xl px-6 py-20 md:py-28">
+    <p class="font-mono text-xs uppercase tracking-[0.25em] text-seal-600 dark:text-seal-400">04 — Playground</p>
+    <div class="mt-4 flex flex-wrap items-end justify-between gap-4">
+      <h2 class="font-display text-3xl font-medium tracking-tight md:text-5xl">The verifier, in miniature.</h2>
+      <p class="max-w-md text-ink-500 dark:text-parchment-200">
+        Toggle the checks. The report is objective, the label is the scheme’s
+        policy, the decision is yours.
+      </p>
+    </div>
+    <div class="mt-12">
+      <VerifierDemo client:load />
+    </div>
+  </section>
+  <Industries />
+</Layout>
