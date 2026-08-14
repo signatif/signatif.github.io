@@ -3,11 +3,11 @@ import Guilloche from './Guilloche.astro';
 
 const rows = [
   { k: 'registry', v: 'Nº 1042' },
-  { k: 'chain', v: 'root-a → nmi → lab' },
+  { k: 'chain', v: 'root (3-of-5) → nmi → lab → model → instrument' },
+  { k: 'attests', v: 'measurement record' },
   { k: 'scope', v: 'metrology · class M' },
   { k: 'dimensions', v: 'authority · person · time' },
   { k: 'transparency', v: 'log #1041 · included' },
-  { k: 'freshness', v: 'within window' },
 ];
 ---
 <div class="animate-rise relative">
@@ -18,7 +18,7 @@ const rows = [
     <div class="cert-grid m-2 rounded-md border border-rule-faint p-5 md:p-6">
       <div class="rounded-sm bg-panel/85 p-4 md:p-5">
         <figcaption class="flex items-center justify-between border-b border-rule-faint pb-3">
-          <span class="label-mono text-ink-3">Calibration certificate</span>
+          <span class="label-mono text-ink-3">Measurement record</span>
           <span class="font-mono text-[11px] text-azure-600">v1</span>
         </figcaption>
         <dl class="mt-3 space-y-2">

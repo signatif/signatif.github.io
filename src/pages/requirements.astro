@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Guilloche from '../components/Guilloche.astro';
+
+const classes = [
+  { clause: '7', title: 'Architecture and trust model', req: '/req/architecture', count: 11, conf: '/conf/architecture', tests: 11 },
+  { clause: '8', title: 'Artifact format and signature binding', req: '/req/artifact-format', count: 19, conf: '/conf/artifact-format', tests: 19 },
+  { clause: '9', title: 'Cryptographic algorithms', req: '/req/algorithms', count: 7, conf: '/conf/algorithms', tests: 7 },
+  { clause: '10', title: 'Threshold signing and federated trust authorities', req: '/req/threshold-signing', count: 12, conf: '/conf/threshold-signing', tests: 12 },
+  { clause: '11', title: 'Trust chain and authorization scope governance', req: '/req/scope', count: 8, conf: '/conf/scope', tests: 8 },
+  { clause: '12', title: 'Revocation and artifact binding', req: '/req/revocation', count: 7, conf: '/conf/revocation', tests: 7 },
+  { clause: '13', title: 'Transparency and multi-log attestation', req: '/req/transparency', count: 8, conf: '/conf/transparency', tests: 8 },
+  { clause: '14', title: 'Verification pipeline', req: '/req/verification', count: 8, conf: '/conf/verification', tests: 8 },
+  { clause: '15', title: 'Key lifecycle', req: '/req/key-lifecycle', count: 6, conf: '/conf/key-lifecycle', tests: 6 },
+  { clause: '16', title: 'Delivery and discovery', req: '/req/delivery', count: 6, conf: '/conf/delivery', tests: 6 },
+  { clause: '17', title: 'Ceremony records', req: '/req/ceremony', count: 5, conf: '/conf/ceremony', tests: 5 },
+  { clause: '18', title: 'Deployment manifest', req: '/req/manifest', count: 7, conf: '/conf/manifest', tests: 7 },
+  { clause: '19', title: 'Governance and mutual recognition', req: '/req/governance', count: 5, conf: '/conf/governance', tests: 5 },
+  { clause: '20', title: 'Algorithm agility', req: '/req/algorithm-agility', count: 4, conf: '/conf/algorithm-agility', tests: 4 },
+];
+
+const totals = [
+  { label: 'Requirements classes', value: '14' },
+  { label: 'Requirements', value: '113' },
+  { label: 'Conformance classes', value: '14' },
+  { label: 'Conformance tests', value: '113' },
+];
+---
+<Layout
+  title="Requirements — Signatif"
+  description="The Signatif requirements registry: 14 requirements classes with 113 requirements, each paired with a conformance class and abstract test suite."
+>
+  <PageHeader
+    eyebrow="Requirements"
+    title="The registry of requirements classes"
+    lede="Signatif specifies requirements as addressed classes — /req identifiers with matching /conf conformance classes — so that “conforming implementation” is a testable claim, not an adjective."
+  />
+
+  <section class="border-b border-rule-faint">
+    <div class="mx-auto max-w-6xl px-6 pb-8 pt-10">
+      <dl class="grid grid-cols-2 border-y border-rule-faint lg:grid-cols-4">
+        {totals.map(({ label, value }, i) => (
+          <div class:list={['py-5 pr-6', i > 0 && 'lg:border-l lg:border-rule-faint lg:pl-6']}>
+            <dt class="label-mono text-ink-3">{label}</dt>
+            <dd class="expanded-wide mt-1 font-mono text-2xl font-semibold text-azure-700">{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <div class="shadow-panel relative overflow-hidden rounded-lg border border-rule bg-panel">
+      <Guilloche class="absolute -right-20 -top-24 size-72 text-azure-600/15" rings={22} seed={9} />
+      <div class="relative overflow-x-auto">
+        <table class="w-full min-w-[52rem] border-collapse text-left">
+          <thead>
+            <tr class="border-b border-rule">
+              <th class="px-6 py-4 label-mono text-ink-3">Clause</th>
+              <th class="px-3 py-4 label-mono text-ink-3">Requirements class</th>
+              <th class="px-3 py-4 label-mono text-ink-3">Identifier</th>
+              <th class="px-3 py-4 label-mono text-right text-ink-3">Req.</th>
+              <th class="px-3 py-4 label-mono text-ink-3">Conformance class</th>
+              <th class="px-6 py-4 label-mono text-right text-ink-3">Tests</th>
+            </tr>
+          </thead>
+          <tbody>
+            {classes.map(({ clause, title, req, count, conf, tests }) => (
+              <tr class="border-b border-rule-faint transition-colors last:border-b-0 hover:bg-azure-50/50">
+                <td class="px-6 py-4 font-mono text-sm text-ink-3">{clause}</td>
+                <td class="px-3 py-4 text-sm font-medium text-ink">{title}</td>
+                <td class="px-3 py-4 font-mono text-xs text-azure-700">{req}</td>
+                <td class="px-3 py-4 text-right font-mono text-sm text-ink-2">{count}</td>
+                <td class="px-3 py-4 font-mono text-xs text-ink-2">{conf}</td>
+                <td class="px-6 py-4 text-right font-mono text-sm text-ink-2">{tests}</td>
+              </tr>
+            ))}
+            <tr class="border-t-2 border-rule bg-paper/60">
+              <td class="px-6 py-4"></td>
+              <td class="px-3 py-4 text-sm font-semibold text-ink">Totals</td>
+              <td class="px-3 py-4"></td>
+              <td class="px-3 py-4 text-right font-mono text-sm font-semibold text-ink">113</td>
+              <td class="px-3 py-4"></td>
+              <td class="px-6 py-4 text-right font-mono text-sm font-semibold text-ink">113</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">How to read the registry</h2>
+      <div class="mt-8 grid gap-8 lg:grid-cols-3">
+        <div class="border-t-2 border-rule pt-4">
+          <h3 class="text-[15px] font-semibold text-ink">Requirements classes</h3>
+          <p class="mt-2 text-sm leading-relaxed text-ink-2">
+            Each /req class groups requirements on one subject, identified by
+            stable identifiers such as
+            <span class="font-mono text-xs text-azure-700">/req/verification/coverage-report</span>.
+            Requirements are stated as testable characteristics — never as
+            products or vendor names.
+          </p>
+        </div>
+        <div class="border-t-2 border-rule pt-4">
+          <h3 class="text-[15px] font-semibold text-ink">Conformance classes</h3>
+          <p class="mt-2 text-sm leading-relaxed text-ink-2">
+            Each class pairs with a /conf class of abstract tests, one per
+            requirement, plus implementation roles — basic and full
+            verifiers, issuing and root authorities, transparency operators,
+            mirrors, and device signers — so an implementation claims exactly
+            what it implements.
+          </p>
+        </div>
+        <div class="border-t-2 border-rule pt-4">
+          <h3 class="text-[15px] font-semibold text-ink">Machine-readable source</h3>
+          <p class="mt-2 text-sm leading-relaxed text-ink-2">
+            The registry is generated from YAML requirement sources in the
+            standard’s repository, rendered into the document and the
+            abstract test suite — one source of truth for document, tests,
+            and tooling.
+          </p>
+          <a
+            href="https://github.com/CalConnect/cc-signatif/tree/main/spec/signatif-standard/sections/data"
+            class="label-mono mt-4 inline-block text-azure-600 transition-colors hover:text-ink"
+          >
+            YAML sources on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

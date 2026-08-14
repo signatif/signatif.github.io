@@ -5,6 +5,7 @@ type TimeAnchor = 'fresh' | 'grace' | 'stale';
 type Label = 'certified' | 'verified' | 'attested' | 'rejected';
 
 const hard = reactive({ signature: true, scope: true, revocation: true });
+const dims = reactive({ person: true, time: true, location: false });
 const soft = reactive({
   transparency: true,
   multiLog: true,
@@ -13,13 +14,23 @@ const soft = reactive({
 });
 const policy = ref<'strict' | 'standard'>('standard');
 
+const dimensionList = computed(() =>
+  ['authority', dims.person && 'person', dims.time && 'time', dims.location && 'location'].filter(
+    Boolean,
+  ) as string[],
+);
+const dimensionCount = computed(() => dimensionList.value.length);
+
 const hardFail = computed(() => !hard.signature || !hard.scope || !hard.revocation);
+const fullCoverage = computed(
+  () => soft.transparency && soft.multiLog && soft.roots >= 2 && dimensionCount.value >= 4,
+);
 
 const label = computed<Label>(() => {
   if (hardFail.value) return 'rejected';
   if (soft.timeAnchor === 'stale') return 'rejected';
   if (soft.timeAnchor === 'grace') return 'verified';
-  if (!soft.transparency || soft.roots < 2 || !soft.multiLog) return 'attested';
+  if (!fullCoverage.value) return 'attested';
   return 'certified';
 });
 
@@ -30,7 +41,7 @@ const accepted = computed(
 const labelNote: Record<Label, string> = {
   certified: 'Full dimensional coverage, transparency and multi-root inclusion.',
   verified: 'Within the grace window — accepted at a downgraded label.',
-  attested: 'Soft-check coverage incomplete. Downgraded by the classification policy.',
+  attested: 'Coverage incomplete. Downgraded by the classification policy.',
   rejected: 'A hard check failed, or the time attestation is outside the window.',
 };
 
@@ -52,6 +63,8 @@ const report = computed(() => [
   { k: 'signature_valid', ok: hard.signature, v: hard.signature ? 'true' : 'false' },
   { k: 'scope_narrowing', ok: hard.scope, v: hard.scope ? 'monotonic' : 'widened' },
   { k: 'revocation_status', ok: hard.revocation, v: hard.revocation ? 'clear' : 'revoked' },
+  { k: 'dimensions', ok: dimensionCount.value >= 2, v: dimensionList.value.join(' · ') },
+  { k: 'dimension_count', ok: dimensionCount.value >= 2, v: String(dimensionCount.value) },
   { k: 'transparency', ok: soft.transparency, v: soft.transparency ? 'included' : 'missing' },
   { k: 'time_anchor', ok: soft.timeAnchor !== 'stale', v: soft.timeAnchor },
   { k: 'independent_roots', ok: soft.roots >= 2, v: String(soft.roots) },
@@ -76,6 +89,23 @@ const report = computed(() => [
         <label class="flex cursor-pointer items-center gap-3 text-sm text-ink">
           <input v-model="hard.revocation" type="checkbox" class="size-4 accent-azure-600" />
           Revocation clear
+        </label>
+      </div>
+
+      <p class="label-mono mt-8 text-azure-600">Dimension co-signatures</p>
+      <p class="mt-2 text-xs leading-relaxed text-ink-3">Authority always attests via the chain; add dimensions as co-signatures on the same payload.</p>
+      <div class="mt-3 space-y-3">
+        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink">
+          <input v-model="dims.person" type="checkbox" class="size-4 accent-azure-600" />
+          Person — certified operator
+        </label>
+        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink">
+          <input v-model="dims.time" type="checkbox" class="size-4 accent-azure-600" />
+          Time — independent time authority
+        </label>
+        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink">
+          <input v-model="dims.location" type="checkbox" class="size-4 accent-azure-600" />
+          Location — attestation tree
         </label>
       </div>
 
@@ -152,7 +182,7 @@ const report = computed(() => [
           class="flex items-baseline justify-between gap-4 border-b border-rule-faint py-2 font-mono text-[13px]"
         >
           <dt class="text-ink-3">{{ row.k }}</dt>
-          <dd class="flex items-center gap-2 text-ink">
+          <dd class="flex items-center gap-2 text-right text-ink">
             <span v-if="row.ok" class="text-verify-700">✓</span>
             <span v-else class="text-seal-600">✗</span>
             <span>{{ row.v }}</span>
