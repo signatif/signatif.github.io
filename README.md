@@ -2,10 +2,10 @@
 
 Website for [Signatif](https://github.com/CalConnect/cc-signatif) — the
 Sealed Interoperable Graduated Non-repudiable Anchored Trust Infrastructure
-Framework (ISO/TC 154 working draft).
+Framework, a CalConnect standard.
 
 Built with Astro, Vue islands, and Tailwind CSS (via the Vite plugin).
-Fonts are self-hosted (Fraunces, IBM Plex Sans, IBM Plex Mono).
+Fonts are self-hosted (IBM Plex Sans, IBM Plex Mono).
 
 ## Commands
 

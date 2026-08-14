@@ -18,16 +18,16 @@ function toggle() {
   <button
     type="button"
     aria-label="Toggle color theme"
-    class="grid size-9 place-items-center rounded-full border border-ink-900/15 text-ink-500 transition-colors hover:border-seal-500 hover:text-seal-600 dark:border-parchment-100/20 dark:text-parchment-300 dark:hover:border-seal-400 dark:hover:text-seal-400"
+    class="grid size-8 place-items-center text-ink-500 transition-colors hover:text-ink-900 dark:text-ink-400 dark:hover:text-ink-50"
     @click="toggle"
   >
     <svg
       v-if="dark"
       viewBox="0 0 24 24"
-      class="size-4"
+      class="size-[18px]"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
+      stroke-width="1.75"
       stroke-linecap="round"
     >
       <circle cx="12" cy="12" r="4"></circle>
@@ -36,10 +36,10 @@ function toggle() {
     <svg
       v-else
       viewBox="0 0 24 24"
-      class="size-4"
+      class="size-[18px]"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
+      stroke-width="1.75"
       stroke-linecap="round"
       stroke-linejoin="round"
     >

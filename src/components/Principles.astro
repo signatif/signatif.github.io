@@ -1,63 +1,41 @@
 ---
 const letters = [
-  {
-    letter: 'S',
-    word: 'Sealed',
-    text: 'Co-signatures over a canonical payload, one per trust dimension. Convergence, not single-signer authority.',
-  },
-  {
-    letter: 'I',
-    word: 'Interoperable',
-    text: 'One pipeline, one coverage-report format. Scheme-specific rules enter through registries, not forks.',
-  },
-  {
-    letter: 'G',
-    word: 'Graduated',
-    text: 'Coverage report, classification label, acceptance decision. Trust in degrees, computed identically by every verifier.',
-  },
-  {
-    letter: 'N',
-    word: 'Non-repudiable',
-    text: 'Threshold quorum, ceremony records, transparency logs. No participant can deny an attestation made in its name.',
-  },
-  {
-    letter: 'A',
-    word: 'Anchored',
-    text: 'Every path ends at a declared trust anchor. Fully offline verification — no phone-home, no proprietary component.',
-  },
-  {
-    letter: 'T',
-    word: 'Trust',
-    text: 'Establishment, assessment, and withdrawal. Revocation propagates to every artifact transitively bound to it.',
-  },
-  {
-    letter: 'I',
-    word: 'Infrastructure',
-    text: 'Shared anchors, logs, and registries beneath any application that needs verifiable artifacts.',
-  },
-  {
-    letter: 'F',
-    word: 'Framework',
-    text: 'Not a product. Requirements that independent implementations conform to, and profiles instantiate.',
-  },
+  { letter: 'S', word: 'Sealed', text: 'Co-signatures over a canonical payload, one per trust dimension. Convergence, not single-signer authority.' },
+  { letter: 'I', word: 'Interoperable', text: 'One pipeline, one coverage-report format. Scheme-specific rules enter through registries, not forks.' },
+  { letter: 'G', word: 'Graduated', text: 'Coverage report, classification label, acceptance decision. Trust in degrees, computed identically by every verifier.' },
+  { letter: 'N', word: 'Non-repudiable', text: 'Threshold quorum, ceremony records, transparency logs. No participant can deny an attestation made in its name.' },
+  { letter: 'A', word: 'Anchored', text: 'Every verification path ends at a declared trust anchor. Fully offline verification — no phone-home, no proprietary component.' },
+  { letter: 'T', word: 'Trust', text: 'Establishment, assessment, and withdrawal. Revocation propagates to every artifact transitively bound to it.' },
+  { letter: 'I', word: 'Infrastructure', text: 'Shared anchors, logs, and registries beneath any application that needs verifiable artifacts.' },
+  { letter: 'F', word: 'Framework', text: 'Not a product. Requirements that independent implementations conform to, and profiles instantiate.' },
 ];
 ---
-<section id="principles" class="mx-auto max-w-6xl px-6 py-20 md:py-28">
-  <p class="font-mono text-xs uppercase tracking-[0.25em] text-seal-600 dark:text-seal-400">01 — Principles</p>
-  <div class="mt-4 flex flex-wrap items-end justify-between gap-4">
-    <h2 class="font-display text-3xl font-medium tracking-tight md:text-5xl">The name is the architecture.</h2>
-    <p class="max-w-md text-ink-500 dark:text-parchment-200">
-      Signatif is a backronym: each letter names a property the International
-      Standard makes normative.
+<section id="principles" class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+  <div class="max-w-2xl">
+    <h2 class="text-2xl font-semibold tracking-tight text-ink-900 dark:text-ink-50 md:text-3xl">Principles</h2>
+    <p class="mt-3 text-ink-600 dark:text-ink-300">
+      Signatif is a backronym: each letter names a property the standard
+      makes normative.
     </p>
   </div>
-  <div class="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-ink-900/15 bg-ink-900/15 dark:border-parchment-100/15 dark:bg-parchment-100/15 sm:grid-cols-2 lg:grid-cols-4">
-    {letters.map(({ letter, word, text }) => (
-      <div class="group relative bg-parchment-50 p-6 transition-colors hover:bg-parchment-100/60 dark:bg-ink-900 dark:hover:bg-ink-800/60">
-        <span class="font-display text-5xl font-medium text-seal-600/90 dark:text-seal-400/90">{letter}</span>
-        <h3 class="mt-4 font-semibold tracking-tight">{word}</h3>
-        <p class="mt-2 text-sm leading-relaxed text-ink-500 dark:text-parchment-300">{text}</p>
-      </div>
-    ))}
+  <div class="mt-10 overflow-x-auto">
+    <table class="w-full min-w-[40rem] border-collapse text-left">
+      <thead>
+        <tr class="border-b border-ink-300 dark:border-ink-700">
+          <th class="w-14 py-3 pr-4 text-xs font-medium uppercase tracking-wider text-ink-400 dark:text-ink-500">Letter</th>
+          <th class="w-44 py-3 pr-4 text-xs font-medium uppercase tracking-wider text-ink-400 dark:text-ink-500">Property</th>
+          <th class="py-3 text-xs font-medium uppercase tracking-wider text-ink-400 dark:text-ink-500">Requirement summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        {letters.map(({ letter, word, text }) => (
+          <tr class="border-b border-ink-200 align-top dark:border-ink-800">
+            <td class="py-4 pr-4 font-mono text-sm font-medium text-seal-600 dark:text-seal-400">{letter}</td>
+            <td class="py-4 pr-4 text-sm font-medium text-ink-900 dark:text-ink-50">{word}</td>
+            <td class="py-4 text-sm leading-relaxed text-ink-600 dark:text-ink-300">{text}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </div>
 </section>

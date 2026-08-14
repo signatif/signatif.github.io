@@ -1,43 +1,42 @@
 ---
 const domains = [
   {
+    n: '01',
     title: 'Legal metrology',
     text: 'Calibration and type-approval certificates, verifiable at inspection time — often decades after issuance.',
-    icon: 'M12 3v18M5 21h14M3 8h18M3 8l-1.5 7h5L5 8Zm16 0-1.5 7h5L21 8Z',
   },
   {
+    n: '02',
     title: 'Pharmaceuticals',
     text: 'Batch release under track-and-trace mandates: manufacturer, operator, conditions, and time, each attested.',
-    icon: 'M6 3h12v18H6zM6 8h12M10 8v10',
   },
   {
+    n: '03',
     title: 'Food safety',
     text: 'Inspection and provenance records that survive hand-offs across supply chains and jurisdictions.',
-    icon: 'M12 21V9m0 0c0-4 3-6 8-6 0 5-3 7-8 6Zm0 3c0-4-3-6-8-6 0 5 3 7 8 6Z',
   },
   {
+    n: '04',
     title: 'Defense procurement',
     text: 'Provenance of supplied components and materials, with revocation that propagates when trust is withdrawn.',
-    icon: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6Z',
   },
 ];
 ---
-<section id="domains" class="mx-auto max-w-6xl px-6 py-20 md:py-28">
-  <p class="font-mono text-xs uppercase tracking-[0.25em] text-seal-600 dark:text-seal-400">03 — Domains</p>
-  <h2 class="mt-4 font-display text-3xl font-medium tracking-tight md:text-5xl">Built for artifacts that must not lie.</h2>
-  <p class="mt-4 max-w-2xl text-ink-500 dark:text-parchment-200">
-    Where a certificate carries legal, economic, or safety consequences,
-    "the key was valid" is not enough. Signatif binds the artifact to the
-    conditions under which it was produced.
-  </p>
-  <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-    {domains.map(({ title, text, icon }) => (
-      <div class="rounded-xl border border-ink-900/15 bg-parchment-50 p-6 transition-colors hover:border-seal-500/50 dark:border-parchment-100/15 dark:bg-ink-900 dark:hover:border-seal-400/50">
-        <svg viewBox="0 0 24 24" class="size-6 text-seal-600 dark:text-seal-400" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d={icon}></path>
-        </svg>
-        <h3 class="mt-5 font-semibold tracking-tight">{title}</h3>
-        <p class="mt-2 text-sm leading-relaxed text-ink-500 dark:text-parchment-300">{text}</p>
+<section id="domains" class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+  <div class="max-w-2xl">
+    <h2 class="text-2xl font-semibold tracking-tight text-ink-900 dark:text-ink-50 md:text-3xl">Where it applies</h2>
+    <p class="mt-3 text-ink-600 dark:text-ink-300">
+      Where a certificate carries legal, economic, or safety consequences,
+      "the key was valid" is not enough. Signatif binds the artifact to the
+      conditions under which it was produced.
+    </p>
+  </div>
+  <div class="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+    {domains.map(({ n, title, text }) => (
+      <div class="border-t border-ink-300 pt-4 dark:border-ink-700">
+        <span class="font-mono text-xs text-ink-400 dark:text-ink-500">{n}</span>
+        <h3 class="mt-1.5 text-[15px] font-semibold text-ink-900 dark:text-ink-50">{title}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink-600 dark:text-ink-300">{text}</p>
       </div>
     ))}
   </div>
