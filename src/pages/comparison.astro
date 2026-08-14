@@ -1,0 +1,304 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Guilloche from '../components/Guilloche.astro';
+
+const scenarios = [
+  {
+    tag: 'Scenario 1 — pharmaceuticals',
+    title: 'Prove the batch, not just the signature',
+    setup:
+      'A batch release must demonstrate that the product came from an authorized manufacturer, was inspected by a certified operator, was manufactured under compliant environmental conditions, and was released at a verifiable time. Four independent claims about reality — one artifact.',
+    attempts: [
+      {
+        tech: 'Traditional PKI',
+        text: 'Validates that the signing key belonged to the manufacturer. Says nothing about the operator, the conditions, or the time — the key’s authority is defined by external policy documents a verifier must read and interpret.',
+      },
+      {
+        tech: 'Blockchain attestation',
+        text: 'Immutably records that something was logged. No scope enforcement over who may attest what, no condition lifecycle, and no revocation that reaches artifacts already bound to a revoked state.',
+      },
+      {
+        tech: 'W3C Verifiable Credentials',
+        text: 'The issuer signs the claims, but the trust model is issuer-asserted: one proof, no convergence semantics across independent attestations, no mandatory transparency, no standardized coverage assessment.',
+      },
+    ],
+    resolution:
+      'Each claim is a cryptographic co-signature on the same canonical payload, backed by its own trust dimension — authority, person, environment, time. The coverage report states exactly which dimensions attest and how independently. Convergence, not issuer reputation, is the evidence.',
+  },
+  {
+    tag: 'Scenario 2 — legal metrology',
+    title: 'Verify at inspection, fifteen years later, offline',
+    setup:
+      'An inspector holds a calibration certificate in a facility with no connectivity. The issuing laboratory may no longer exist. The certificate must still verify — with the same classification — against what the inspector carries.',
+    attempts: [
+      {
+        tech: 'Traditional PKI',
+        text: 'Path validation leans on reachable CRL/OCSP services or cleverly cached state; long-term validation (CAdES-A, PAdES-LTV) preserves archive-time signature validity but still reasons about certificates, not about the artifact’s conditions.',
+      },
+      {
+        tech: 'Blockchain attestation',
+        text: 'Verification means reconciling with the ledger — a network round trip, a synced node, and an operator still in business. Offline verification is not the model.',
+      },
+      {
+        tech: 'Code-signing transparency',
+        text: 'Built for software artifacts under an ecosystem log; inclusion proofs exist, but the model carries no notion of dimensional attestations, scope conditions, or graduated labels for a metrology certificate.',
+      },
+    ],
+    resolution:
+      'The trust anchor bundle, an embedded delegation chain, cached tree heads with inclusion proofs, and cached revocation lists within validity or grace produce the same classification label as online verification — differing only where freshness-dependent checks cannot be satisfied. Border posts and factory floors are first-class environments, not degraded ones.',
+  },
+  {
+    tag: 'Scenario 3 — food safety',
+    title: 'One record, two jurisdictions',
+    setup:
+      'A consignment crosses a border. The importing authority trusts its own roots; the exporter attests under another hierarchy. Both must accept one record without a policy negotiation between the two regimes.',
+    attempts: [
+      {
+        tech: 'Traditional PKI',
+        text: 'Cross-recognition means bridge CAs or cross-certificates with constraints — single entities joining hierarchies, with path building across regimes. The verifier never sees why the other domain’s key is trusted.',
+      },
+      {
+        tech: 'Blockchain attestation',
+        text: 'Replaces the trust question with membership: one ledger, one operator consortium. Cross-domain recognition collapses into “was it logged on our chain”.',
+      },
+      {
+        tech: 'Code-signing transparency',
+        text: 'A single ecosystem log per community. Multi-operator redundancy is a monitoring practice, not a verifiable quorum attached to each artifact.',
+      },
+    ],
+    resolution:
+      'Cross-domain recognition happens on the artifact: co-signatures from independent roots ride the payload itself, and the count of independent roots feeds the coverage report and the grade. No bridge authorities, no cross-certificate topology — the verifier’s own anchors decide, and diversity is measurable.',
+  },
+  {
+    tag: 'Scenario 4 — defense procurement',
+    title: 'The authorization is withdrawn',
+    setup:
+      'A supplier’s accreditation is revoked. Every conformity statement that supplier ever issued — and every artifact downstream that leans on it — must stop being acceptable, provably and immediately.',
+    attempts: [
+      {
+        tech: 'Traditional PKI',
+        text: 'Revocation is key-centric: it captures “this key is no longer trustworthy”. The certificate is invalidated; signatures made while it was valid commonly remain valid. It cannot express “the real-world conditions under which these artifacts were produced no longer hold”.',
+      },
+      {
+        tech: 'Blockchain attestation',
+        text: 'Append-only by design. Nothing can be un-issued; revocation means out-of-band blacklists that the ledger itself never learns.',
+      },
+      {
+        tech: 'W3C Verifiable Credentials',
+        text: 'Status lists invalidate the credential — but do not propagate to dependent artifacts or across dimensions, and the relying party must know where to look.',
+      },
+    ],
+    resolution:
+      'Threshold-gated revocation of authority state propagates to every artifact transitively bound to it, across all trust dimensions and all chains, because revocation state is hash-bound into verification. Withdrawal is a first-class operation of the trust lifecycle — the property the name originally encoded.',
+  },
+];
+
+const matrix = {
+  columns: ['Traditional PKI', 'Code-signing transparency', 'Blockchain attestation', 'W3C VCs', 'Signatif'],
+  rows: [
+    {
+      capability: 'Authorization boundary',
+      cells: ['Policy-defined; not verifiable from the certificate', 'Ecosystem policy', 'None — membership replaces scope', 'Issuer-asserted', 'Cryptographic scope, hard check at every link'],
+    },
+    {
+      capability: 'Attestations per object',
+      cells: ['One signature', 'One signature + log inclusion', 'One ledger entry', 'One proof', 'N co-signatures, one per dimension'],
+    },
+    {
+      capability: 'Multi-dimensional evidence',
+      cells: ['Authority only', 'Provenance only', 'Whatever is logged', 'Claims, ungraded', 'Time, location, environment as cryptographic dimensions'],
+    },
+    {
+      capability: 'Threshold protection',
+      cells: ['Optional; root-only in practice', 'N/A', 'Consensus, not signing authority', 'N/A', 'Mandatory at every authority level'],
+    },
+    {
+      capability: 'Transparency',
+      cells: ['Optional (CT is web-PKI only)', 'Ecosystem log, single log suffices', 'The ledger itself', 'Not required', 'Inclusion required; M-of-K log quorum'],
+    },
+    {
+      capability: 'Revocation reach',
+      cells: ['The certificate', 'N/A for this purpose', 'None — append-only', 'The credential', 'Propagates to all transitively bound artifacts'],
+    },
+    {
+      capability: 'Time evidence',
+      cells: ['Issuer-asserted validity period', 'Signing time', 'Block timestamps', 'Issuance date', 'Independent time authority as a trust dimension'],
+    },
+    {
+      capability: 'Trust assessment',
+      cells: ['Binary; graduation is policy-interpreted', 'Binary', 'Logged or not', 'Valid or invalid', 'Objective coverage report, graduated labels'],
+    },
+    {
+      capability: 'Offline verification',
+      cells: ['Awkward; freshness-sensitive', 'Not the model', 'No — needs the ledger', 'Possible for proofs only', 'First-class: same label except freshness'],
+    },
+    {
+      capability: 'Cross-domain recognition',
+      cells: ['Bridge CAs, cross-certificates', 'One ecosystem', 'One chain', 'Per-issuer trust', 'Co-signatures from independent roots on the artifact'],
+    },
+  ],
+};
+
+const hardForSignatif = [
+  'Multi-party co-signed artifacts',
+  'Cryptographic scope enforcement',
+  'Threshold at every authority level',
+  'Transparency as a verification requirement',
+  'Revocation propagation to artifacts',
+  'Multi-dimensional attestation',
+  'Graduated classification labels',
+];
+
+const hardForPki = [
+  'Web browser interoperability and the web PKI trust stores',
+  'TLS session authentication',
+  'Mature S/MIME email ecosystems',
+];
+---
+<Layout
+  title="Comparison — Signatif"
+  description="How Signatif compares with traditional PKI, code-signing transparency, blockchain attestation, and W3C Verifiable Credentials across concrete regulated-industry scenarios."
+>
+  <PageHeader
+    eyebrow="Comparison"
+    title="Where the incumbents stop, and why"
+    lede="This comparison follows the standard’s own informative annexes — and it cuts both ways. PKI remains the right tool for TLS and web identity. What follows is the regulated-artifact problem, where each incumbent hits a design boundary rather than an implementation bug."
+  />
+
+  <!-- scenarios -->
+  <section class="mx-auto max-w-6xl space-y-16 px-6 py-14">
+    {scenarios.map(({ tag, title, setup, attempts, resolution }) => (
+      <article>
+        <div class="flex items-center gap-4">
+          <p class="label-mono text-azure-600">{tag}</p>
+          <span class="vernier flex-1 text-rule"></span>
+        </div>
+        <h2 class="expanded mt-3 text-2xl font-semibold tracking-tight text-ink md:text-[1.75rem]">{title}</h2>
+        <p class="mt-4 max-w-3xl leading-relaxed text-ink-2">{setup}</p>
+        <div class="mt-8 grid gap-4 lg:grid-cols-2">
+          {attempts.map(({ tech, text }) => (
+            <div class="rounded-lg border border-rule-faint bg-panel p-6">
+              <p class="flex items-center gap-2.5 text-[13px] font-semibold text-ink">
+                <span class="text-seal-600">✗</span>
+                {tech}
+              </p>
+              <p class="mt-2.5 text-sm leading-relaxed text-ink-2">{text}</p>
+            </div>
+          ))}
+          <div class="relative overflow-hidden rounded-lg border-2 border-verify-700/30 bg-panel p-6 lg:col-span-2">
+            <Guilloche class="absolute -right-14 -top-14 size-44 text-verify-700/15" rings={16} seed={8} />
+            <p class="flex items-center gap-2.5 text-[13px] font-semibold text-ink">
+              <span class="text-verify-700">✓</span>
+              With Signatif
+            </p>
+            <p class="relative mt-2.5 max-w-3xl text-sm leading-relaxed text-ink-2">{resolution}</p>
+          </div>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <!-- matrix -->
+  <section class="border-y border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Capability matrix</h2>
+      <p class="mt-3 max-w-2xl text-ink-2">
+        Structural properties, drawn from the standard’s comparison annex.
+        “Does not provide” means the property is not expressible in the
+        model — not that implementations are sloppy.
+      </p>
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[56rem] border-collapse text-left">
+          <thead>
+            <tr class="border-b border-rule">
+              <th class="py-3 pr-4 label-mono text-ink-3">Capability</th>
+              {matrix.columns.map((c, i) => (
+                <th class:list={['py-3 pr-4 label-mono text-ink-3', i === matrix.columns.length - 1 && 'text-azure-700']}>{c}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {matrix.rows.map(({ capability, cells }) => (
+              <tr class="border-b border-rule-faint align-top">
+                <th scope="row" class="py-4 pr-4 text-sm font-semibold text-ink">{capability}</th>
+                {cells.map((cell, i) => (
+                  <td class:list={['py-4 pr-4 text-[13px] leading-relaxed', i === cells.length - 1 ? 'font-medium text-azure-700' : 'text-ink-2']}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- hard requirements, coexistence -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div>
+        <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Hard requirements, both ways</h2>
+        <p class="mt-3 text-ink-2">
+          Some properties are structural: if a deployment needs them, the
+          technology without them cannot be used. The standard is explicit
+          that this list points in both directions.
+        </p>
+        <div class="mt-6 space-y-4">
+          <div class="rounded-lg border border-rule-faint bg-panel p-6">
+            <p class="label-mono text-verify-700">Only Signatif provides</p>
+            <ul class="mt-3 grid gap-2 sm:grid-cols-2">
+              {hardForSignatif.map((item) => (
+                <li class="flex gap-2.5 text-sm text-ink-2">
+                  <span class="mt-[9px] size-1 shrink-0 rounded-full bg-verify-700"></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="rounded-lg border border-rule-faint bg-panel p-6">
+            <p class="label-mono text-azure-700">Only PKI provides</p>
+            <ul class="mt-3 space-y-2">
+              {hardForPki.map((item) => (
+                <li class="flex gap-2.5 text-sm text-ink-2">
+                  <span class="mt-[9px] size-1 shrink-0 rounded-full bg-azure-600"></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="space-y-6">
+        <div class="rounded-lg border border-rule-faint bg-panel p-6">
+          <p class="label-mono text-ink-3">Coexistence, not replacement</p>
+          <p class="mt-3 text-sm leading-relaxed text-ink-2">
+            A Signatif end certificate may reference a PKI certificate for
+            the identity dimension, and a W3C Verifiable Credential can be
+            the payload a Signatif artifact wraps — its single proof replaced
+            by multi-dimensional co-signatures. PKI continues to carry TLS;
+            Signatif carries the artifacts.
+          </p>
+        </div>
+        <div class="rounded-lg border border-rule-faint bg-panel p-6">
+          <p class="label-mono text-ink-3">PKI is a special case</p>
+          <p class="mt-3 text-sm leading-relaxed text-ink-2">
+            A deployment configured with single-signer end authorities, one
+            dimension, and binary acceptance behaves exactly like a
+            traditional PKI. Migration can be graduated: start with the data
+            dimension and existing keys, then add person, time, location,
+            and environment dimensions as the artifact model permits.
+          </p>
+        </div>
+        <div class="rounded-lg border border-rule-faint bg-panel p-6">
+          <p class="label-mono text-ink-3">Where preference decides</p>
+          <p class="mt-3 text-sm leading-relaxed text-ink-2">
+            Code signing, document signing, device identity, and internal
+            CAs are viable in both. PKI wins on ecosystem maturity;
+            Signatif wins where scope enforcement, threshold, transparency,
+            or revocation propagation is wanted.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
