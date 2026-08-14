@@ -8,6 +8,7 @@ interface Props {
   description: string;
 }
 const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
 <html lang="en" class="scroll-smooth">
@@ -19,14 +20,24 @@ const { title, description } = Astro.props;
     <meta name="theme-color" content="#f6f8fa" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:site_name" content="Signatif" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://signatif.github.io" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
   </head>
   <body class="bg-paper font-sans text-ink antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-white"
+    >
+      Skip to content
+    </a>
     <Header />
-    <main>
+    <main id="main">
       <slot />
     </main>
     <Footer />

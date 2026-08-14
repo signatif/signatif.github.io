@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SealMark from '../components/SealMark.astro';
+---
+<Layout
+  title="Page not found — Signatif"
+  description="No verification path exists from this URL to any known page."
+>
+  <section class="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <div class="max-w-xl">
+      <p class="label-mono text-seal-600">404 — no path to anchor</p>
+      <h1 class="expanded mt-4 text-4xl font-semibold tracking-tight text-ink">
+        This artifact cannot be verified
+      </h1>
+      <p class="mt-4 text-lg leading-relaxed text-ink-2">
+        No verification path exists from this URL to any known page. The
+        resource may have been revoked, retired, or was never issued.
+      </p>
+      <div class="mt-8 flex items-center gap-2.5">
+        <SealMark class="size-5 text-seal-600" />
+        <a href="/" class="text-sm font-medium text-azure-700 transition-colors hover:text-ink">
+          Return to the registry
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
