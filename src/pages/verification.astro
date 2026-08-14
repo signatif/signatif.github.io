@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import VerifierDemo from '../components/VerifierDemo.vue';
+
+const hardChecks = [
+  { name: 'Format validity', text: 'The artifact parses and the canonical payload reconstructs deterministically.' },
+  { name: 'Signature validity', text: 'Every signature verifies under its stated algorithm and key.' },
+  { name: 'Chain integrity', text: 'Each delegation link is properly signed by its parent authority.' },
+  { name: 'Scope narrowing', text: 'The authorization scope narrows — never widens — at every link.' },
+  { name: 'Scope conditions', text: 'The predicates attached to the signing scope evaluate true for this artifact.' },
+  { name: 'Revocation status', text: 'No authority in the chain, and no bound state, is revoked.' },
+];
+
+const softChecks = [
+  { name: 'Transparency inclusion', text: 'The artifact and its certificates are provably in a recognized log.' },
+  { name: 'Time anchor', text: 'The time attestation falls within the freshness window.' },
+  { name: 'Cross-domain co-signatures', text: 'Independent roots co-signed the same canonical payload.' },
+  { name: 'Multi-log attestation', text: 'Inclusion in M of K independent logs, so no operator controls the record.' },
+];
+---
+<Layout
+  title="Verification — Signatif"
+  description="The Signatif verification pipeline: hard and soft checks, trust-graph path-finding, the deterministic coverage report, scheme-defined classification labels, and verifier acceptance policies."
+>
+  <PageHeader
+    eyebrow="Verification"
+    title="Objective reports, published policies, deliberate decisions"
+    lede="Signatif splits verification into three separable decisions — what the evidence is, how it grades, and whether it is good enough — so no party silently bundles them."
+  />
+
+  <!-- pipeline -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <div>
+        <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Hard and soft checks</h2>
+        <p class="mt-3 max-w-md text-ink-2">
+          The pipeline applies an ordered sequence of checks. Hard failures
+          short-circuit immediately to the rejected label. Soft results do
+          not fail anything — they accumulate as evidence into the coverage
+          report.
+        </p>
+        <div class="shadow-panel mt-8 rounded-lg border border-rule bg-panel p-5 font-mono text-xs">
+          <p class="label-mono mb-3 text-ink-3">Pipeline — abbreviated</p>
+          <pre class="overflow-x-auto leading-relaxed text-ink"><code>for check in pipeline:
+    if check.hard and not check.pass:
+        return "rejected"
+report = collect(pipeline)
+label = classify(report)   # scheme policy
+decision = accept(label)   # verifier policy</code></pre>
+        </div>
+      </div>
+      <div class="grid gap-8">
+        <div>
+          <p class="label-mono text-seal-600">Hard checks — failure rejects</p>
+          <dl class="mt-4 divide-y divide-rule-faint border-y border-rule-faint">
+            {hardChecks.map(({ name, text }) => (
+              <div class="grid gap-1 py-3.5 sm:grid-cols-[13rem_1fr] sm:gap-4">
+                <dt class="text-sm font-semibold text-ink">{name}</dt>
+                <dd class="text-sm leading-relaxed text-ink-2">{text}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+        <div>
+          <p class="label-mono text-azure-600">Soft checks — coverage accumulates</p>
+          <dl class="mt-4 divide-y divide-rule-faint border-y border-rule-faint">
+            {softChecks.map(({ name, text }) => (
+              <div class="grid gap-1 py-3.5 sm:grid-cols-[13rem_1fr] sm:gap-4">
+                <dt class="text-sm font-semibold text-ink">{name}</dt>
+                <dd class="text-sm leading-relaxed text-ink-2">{text}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="vernier mx-auto max-w-6xl px-6 text-rule-faint"></div>
+
+  <!-- pathfinding + report -->
+  <section class="border-y border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <div class="grid gap-10 lg:grid-cols-2">
+        <div>
+          <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Path-finding in the trust graph</h2>
+          <p class="mt-3 text-ink-2">
+            For each signature on the artifact, the verifier finds one or
+            more paths through the trust graph to root anchors in its trust
+            anchor bundle — validating signature and scope narrowing at
+            every link. All valid paths are collected, and their distinct
+            roots feed cross-domain diversity scoring: an artifact
+            co-signed through two independent roots is stronger evidence
+            than two signatures through one.
+          </p>
+        </div>
+        <div>
+          <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">The coverage report</h2>
+          <p class="mt-3 text-ink-2">
+            The pipeline’s output is a report of objective facts: hard-check
+            status, transparency inclusion, time-anchor status, verified
+            dimension list and count, independent root count, and multi-log
+            quorum status. It is a deterministic function of the artifact
+            and the verifier’s state — two conforming verifiers with the
+            same state produce identical reports, byte for byte.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- three decisions -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Report, label, decision</h2>
+    <div class="mt-8 grid gap-4 lg:grid-cols-3">
+      <div class="rounded-lg border border-rule-faint bg-panel p-6">
+        <p class="label-mono text-ink-3">01 · Coverage report</p>
+        <h3 class="mt-3 text-[15px] font-semibold text-ink">The evidence</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink-2">
+          Produced by every conforming verifier, deterministically. No
+          policy enters here — only what was checked and what held.
+        </p>
+      </div>
+      <div class="rounded-lg border border-rule-faint bg-panel p-6">
+        <p class="label-mono text-ink-3">02 · Classification label</p>
+        <h3 class="mt-3 text-[15px] font-semibold text-ink">The grade</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink-2">
+          The scheme’s classification policy maps report fields to labels —
+          a pure function, published in the deployment manifest. The
+          standard does not prescribe labels or thresholds; each scheme
+          defines its own.
+        </p>
+      </div>
+      <div class="rounded-lg border border-rule-faint bg-panel p-6">
+        <p class="label-mono text-ink-3">03 · Acceptance</p>
+        <h3 class="mt-3 text-[15px] font-semibold text-ink">The decision</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink-2">
+          The verifier maps labels to accept or reject for a given decision
+          context. This is the verifier’s risk decision — explicit,
+          configurable, and auditable.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-10 grid gap-8 border-t border-rule-faint pt-8 lg:grid-cols-2">
+      <div>
+        <h3 class="text-[15px] font-semibold text-ink">Time freshness</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink-2">
+          A configurable freshness window governs time attestations.
+          Attestations outside the window are rejected; those within a
+          secondary grace period may be accepted at a downgraded label, as
+          the acceptance policy decides. Freshness parameters live in the
+          verifier’s policy, never in the artifact.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-[15px] font-semibold text-ink">Offline equality</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink-2">
+          Offline verification yields the same classification label as
+          online verification, except where freshness-dependent checks
+          cannot be satisfied — making border inspections, factory floors,
+          and air-gapped archives first-class environments, not degraded
+          ones.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- demo -->
+  <section class="border-t border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Try the pipeline</h2>
+      <p class="mt-3 max-w-2xl text-ink-2">
+        A miniature of the real model. Break a hard check and watch the
+        pipeline short-circuit; weaken soft coverage and watch the label
+        downgrade; then change the acceptance policy and watch the same
+        report produce a different decision.
+      </p>
+      <div class="mt-10">
+        <VerifierDemo client:load />
+      </div>
+    </div>
+  </section>
+</Layout>

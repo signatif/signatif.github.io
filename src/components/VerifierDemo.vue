@@ -35,10 +35,17 @@ const labelNote: Record<Label, string> = {
 };
 
 const dotColor: Record<Label, string> = {
-  certified: 'bg-emerald-600',
-  verified: 'bg-amber-500',
-  attested: 'bg-ink-400',
+  certified: 'bg-verify-700',
+  verified: 'bg-azure-600',
+  attested: 'bg-ink-3',
   rejected: 'bg-seal-600',
+};
+
+const chipColor: Record<Label, string> = {
+  certified: 'border-verify-100 bg-verify-100/60 text-verify-700',
+  verified: 'border-azure-100 bg-azure-50 text-azure-700',
+  attested: 'border-rule bg-paper text-ink-2',
+  rejected: 'border-seal-100 bg-seal-100/60 text-seal-600',
 };
 
 const report = computed(() => [
@@ -53,50 +60,46 @@ const report = computed(() => [
 </script>
 
 <template>
-  <div class="grid border border-ink-300 dark:border-ink-700 lg:grid-cols-2 lg:divide-x lg:divide-ink-300 dark:lg:divide-ink-700">
-    <!-- controls -->
+  <div class="shadow-panel grid overflow-hidden rounded-lg border border-rule bg-panel lg:grid-cols-2">
+    <!-- control panel -->
     <div class="p-6 md:p-8">
-      <p class="text-xs font-medium uppercase tracking-wider text-ink-400 dark:text-ink-500">
-        Hard checks — failure rejects
-      </p>
+      <p class="label-mono text-seal-600">Hard checks — failure rejects</p>
       <div class="mt-4 space-y-3">
-        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink-800 dark:text-ink-100">
-          <input v-model="hard.signature" type="checkbox" class="size-4 accent-seal-600" />
+        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink">
+          <input v-model="hard.signature" type="checkbox" class="size-4 accent-azure-600" />
           Signature valid
         </label>
-        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink-800 dark:text-ink-100">
-          <input v-model="hard.scope" type="checkbox" class="size-4 accent-seal-600" />
+        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink">
+          <input v-model="hard.scope" type="checkbox" class="size-4 accent-azure-600" />
           Scope narrowing holds
         </label>
-        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink-800 dark:text-ink-100">
-          <input v-model="hard.revocation" type="checkbox" class="size-4 accent-seal-600" />
+        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink">
+          <input v-model="hard.revocation" type="checkbox" class="size-4 accent-azure-600" />
           Revocation clear
         </label>
       </div>
 
-      <p class="mt-8 text-xs font-medium uppercase tracking-wider text-ink-400 dark:text-ink-500">
-        Soft checks — coverage accumulates
-      </p>
+      <p class="label-mono mt-8 text-azure-600">Soft checks — coverage accumulates</p>
       <div class="mt-4 space-y-3">
-        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink-800 dark:text-ink-100">
-          <input v-model="soft.transparency" type="checkbox" class="size-4 accent-seal-600" />
+        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink">
+          <input v-model="soft.transparency" type="checkbox" class="size-4 accent-azure-600" />
           Transparency inclusion
         </label>
-        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink-800 dark:text-ink-100">
-          <input v-model="soft.multiLog" type="checkbox" class="size-4 accent-seal-600" />
+        <label class="flex cursor-pointer items-center gap-3 text-sm text-ink">
+          <input v-model="soft.multiLog" type="checkbox" class="size-4 accent-azure-600" />
           Multi-log quorum met
         </label>
         <div>
-          <span class="text-sm text-ink-800 dark:text-ink-100">Time anchor</span>
-          <div class="mt-2 flex divide-x divide-ink-300 border border-ink-300 dark:divide-ink-700 dark:border-ink-700" style="width: fit-content">
+          <span class="text-sm text-ink">Time anchor</span>
+          <div class="mt-2 flex w-fit divide-x divide-rule border border-rule">
             <button
               v-for="t in ['fresh', 'grace', 'stale'] as const"
               :key="t"
               type="button"
               class="px-3.5 py-1.5 font-mono text-xs transition-colors"
               :class="soft.timeAnchor === t
-                ? 'bg-ink-900 text-white dark:bg-ink-100 dark:text-ink-900'
-                : 'text-ink-500 hover:text-ink-800 dark:text-ink-400 dark:hover:text-ink-100'"
+                ? 'bg-azure-700 text-white'
+                : 'text-ink-3 hover:text-ink'"
               @click="soft.timeAnchor = t"
             >
               {{ t }}
@@ -104,16 +107,16 @@ const report = computed(() => [
           </div>
         </div>
         <div>
-          <span class="text-sm text-ink-800 dark:text-ink-100">Independent roots</span>
-          <div class="mt-2 flex divide-x divide-ink-300 border border-ink-300 dark:divide-ink-700 dark:border-ink-700" style="width: fit-content">
+          <span class="text-sm text-ink">Independent roots</span>
+          <div class="mt-2 flex w-fit divide-x divide-rule border border-rule">
             <button
               v-for="r in [0, 1, 2] as const"
               :key="r"
               type="button"
               class="px-4 py-1.5 font-mono text-xs transition-colors"
               :class="soft.roots === r
-                ? 'bg-ink-900 text-white dark:bg-ink-100 dark:text-ink-900'
-                : 'text-ink-500 hover:text-ink-800 dark:text-ink-400 dark:hover:text-ink-100'"
+                ? 'bg-azure-700 text-white'
+                : 'text-ink-3 hover:text-ink'"
               @click="soft.roots = r"
             >
               {{ r }}
@@ -122,18 +125,16 @@ const report = computed(() => [
         </div>
       </div>
 
-      <p class="mt-8 text-xs font-medium uppercase tracking-wider text-ink-400 dark:text-ink-500">
-        Verifier acceptance policy
-      </p>
-      <div class="mt-3 flex divide-x divide-ink-300 border border-ink-300 dark:divide-ink-700 dark:border-ink-700" style="width: fit-content">
+      <p class="label-mono mt-8 text-ink-3">Verifier acceptance policy</p>
+      <div class="mt-3 flex w-fit divide-x divide-rule border border-rule">
         <button
           v-for="p in ['standard', 'strict'] as const"
           :key="p"
           type="button"
           class="px-3.5 py-1.5 font-mono text-xs transition-colors"
           :class="policy === p
-            ? 'bg-ink-900 text-white dark:bg-ink-100 dark:text-ink-900'
-            : 'text-ink-500 hover:text-ink-800 dark:text-ink-400 dark:hover:text-ink-100'"
+            ? 'bg-ink text-white'
+            : 'text-ink-3 hover:text-ink'"
           @click="policy = p"
         >
           {{ p }}
@@ -141,42 +142,46 @@ const report = computed(() => [
       </div>
     </div>
 
-    <!-- output -->
-    <div class="flex flex-col border-t border-ink-300 p-6 dark:border-ink-700 md:p-8 lg:border-t-0">
-      <p class="text-xs font-medium uppercase tracking-wider text-ink-400 dark:text-ink-500">Coverage report</p>
+    <!-- readout -->
+    <div class="border-t border-rule-faint bg-paper/60 p-6 md:p-8 lg:border-t-0 lg:border-l lg:border-rule-faint">
+      <p class="label-mono text-ink-3">Coverage report</p>
       <dl class="mt-3">
         <div
           v-for="row in report"
           :key="row.k"
-          class="flex items-baseline justify-between gap-4 border-b border-ink-100 py-2 font-mono text-[13px] dark:border-ink-800"
+          class="flex items-baseline justify-between gap-4 border-b border-rule-faint py-2 font-mono text-[13px]"
         >
-          <dt class="text-ink-500 dark:text-ink-400">{{ row.k }}</dt>
-          <dd class="flex items-center gap-2 text-ink-800 dark:text-ink-100">
-            <span v-if="row.ok" class="text-emerald-600">✓</span>
-            <span v-else class="text-seal-600 dark:text-seal-400">✗</span>
+          <dt class="text-ink-3">{{ row.k }}</dt>
+          <dd class="flex items-center gap-2 text-ink">
+            <span v-if="row.ok" class="text-verify-700">✓</span>
+            <span v-else class="text-seal-600">✗</span>
             <span>{{ row.v }}</span>
           </dd>
         </div>
       </dl>
 
       <div class="mt-6 flex items-center justify-between gap-4">
-        <span class="text-xs font-medium uppercase tracking-wider text-ink-400 dark:text-ink-500">Classification</span>
-        <span class="flex items-center gap-2 border border-ink-300 px-2.5 py-1 font-mono text-xs font-medium text-ink-800 dark:border-ink-700 dark:text-ink-100">
-          <span class="size-2 rounded-full" :class="dotColor[label]"></span>
+        <span class="label-mono text-ink-3">Classification</span>
+        <span
+          class="flex items-center gap-2 border px-2.5 py-1 font-mono text-xs font-medium text-ink"
+          :class="chipColor[label]"
+        >
+          <span class="size-1.5 rounded-full" :class="dotColor[label]"></span>
           {{ label }}
         </span>
       </div>
-      <p class="mt-2 text-sm text-ink-500 dark:text-ink-400">{{ labelNote[label] }}</p>
+      <p class="mt-2 text-sm text-ink-2">{{ labelNote[label] }}</p>
 
-      <div class="mt-auto flex items-center justify-between gap-4 border-t border-ink-200 pt-5 dark:border-ink-800 lg:mt-8">
-        <p class="font-mono text-xs text-ink-500 dark:text-ink-400">
+      <div class="mt-8 flex items-center justify-between gap-4 border-t-2 border-rule pt-5">
+        <p class="font-mono text-xs text-ink-3">
           acceptance policy: {{ policy }}
         </p>
         <p
-          class="font-mono text-lg font-semibold uppercase tracking-wide"
+          :key="String(accepted) + label"
+          class="animate-thump expanded text-xl font-bold uppercase tracking-wide"
           :class="accepted
-            ? 'text-emerald-700 dark:text-emerald-400'
-            : 'text-seal-600 dark:text-seal-400'"
+            ? 'text-verify-700'
+            : 'text-seal-600'"
         >
           {{ accepted ? 'accept' : 'reject' }}
         </p>

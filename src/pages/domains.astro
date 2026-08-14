@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const domains = [
+  {
+    title: 'Legal metrology',
+    lede: 'Certificates that outlive their issuers.',
+    text: 'A measuring instrument is type-approved, tested by an accredited laboratory, and calibrated against traceable standards — and the entire chain of authority must still hold at the time and place of verification, decades after issuance. Signatif carries that chain inside the certificate: scope narrowing from the national metrology institute to the laboratory to the instrument class, dimensional attestations for time and environment, and offline verification for inspectors in the field.',
+    points: [
+      'Type-approval and calibration certificates as trusted artifacts',
+      'Five-tier authority hierarchies with monotonic scope narrowing',
+      'Offline verification at inspection time — no phone-home to the NMI',
+    ],
+  },
+  {
+    title: 'Pharmaceuticals',
+    lede: 'Batch release under track-and-trace mandates.',
+    text: 'A batch release must demonstrate that the product came from an authorized manufacturer, was inspected by a certified operator, was manufactured under compliant environmental conditions, and was released at a verifiable time. Regulators mandate digital provenance; the industry needs one verifiable object that carries all of it. Signatif makes each of those claims a cryptographic dimension with its own attestation, and revocation that propagates when an authorization is withdrawn.',
+    points: [
+      'Serialization and batch records as multi-dimensional artifacts',
+      'Operator certification as a person-dimension co-signature',
+      'Revocation propagation when an authorization is withdrawn',
+    ],
+  },
+  {
+    title: 'Food safety',
+    lede: 'Provenance across supply chains and jurisdictions.',
+    text: 'Inspection and provenance records cross many organizational boundaries between farm and shelf, in many jurisdictions, with long retention periods. Signatif’s cross-domain co-signatures let independent authorities converge on one record, and its transparency logs give every participant third-party evidence of what was issued — without a central operator.',
+    points: [
+      'Inspection certificates with cross-domain co-signatures',
+      'M-of-K multi-log inclusion — no single controlling operator',
+      'Long-retention artifacts verifiable without the original issuer',
+    ],
+  },
+  {
+    title: 'Defense procurement',
+    lede: 'Component provenance that can be withdrawn.',
+    text: 'Supplied components and materials must be traceable to authorized sources, and authorizations must be revocable — retroactively and provably — when a supplier loses standing. Signatif binds provenance to scoped authority and propagates revocation to every artifact transitively bound to a revoked state, across all dimensions and chains.',
+    points: [
+      'Source-authorization chains with hard scope enforcement',
+      'Threshold-gated, auditable revocation with propagation',
+      'Ceremony records documenting key management end to end',
+    ],
+  },
+];
+
+const drivers = [
+  { name: 'EU Digital Product Passport', text: 'Verifiable product lifecycle data for regulated goods.' },
+  { name: 'US DSCSA', text: 'Track-and-trace mandates for pharmaceuticals.' },
+  { name: 'OIML digital certificates', text: 'Machine-verifiable metrological conformity.' },
+];
+---
+<Layout
+  title="Domains — Signatif"
+  description="Where Signatif applies: legal metrology, pharmaceuticals, food safety, and defense procurement — industries whose certificates carry legal, economic, and safety consequences."
+>
+  <PageHeader
+    eyebrow="Domains"
+    title="Where certificates carry consequences"
+    lede="In regulated industries, an artifact is evidence. It must survive organizational boundaries, jurisdictional boundaries, and decades of time — and remain verifiable by people who never met its issuer."
+  />
+
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="space-y-14">
+      {domains.map(({ title, lede, text, points }) => (
+        <article class="grid gap-6 border-t-2 border-rule pt-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
+          <div>
+            <h2 class="expanded text-xl font-semibold tracking-tight text-ink md:text-2xl">{title}</h2>
+            <p class="mt-2 text-sm font-medium text-azure-700">{lede}</p>
+            <ul class="mt-5 space-y-2">
+              {points.map((p) => (
+                <li class="flex gap-2.5 text-[13px] leading-relaxed text-ink-2">
+                  <span class="mt-[8px] size-1 shrink-0 rounded-full bg-azure-600"></span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p class="max-w-2xl leading-relaxed text-ink-2">{text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="border-t border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">The regulatory pull</h2>
+      <p class="mt-3 max-w-2xl text-ink-2">
+        Regulatory frameworks are increasingly mandating digital provenance.
+        Each mandate creates demand for standardized trust infrastructure
+        that no single vendor’s system satisfies.
+      </p>
+      <dl class="mt-8 grid gap-px overflow-hidden rounded-lg border border-rule-faint bg-rule-faint md:grid-cols-3">
+        {drivers.map(({ name, text }) => (
+          <div class="bg-panel p-6">
+            <dt class="label-mono text-azure-700">{name}</dt>
+            <dd class="mt-2.5 text-sm leading-relaxed text-ink-2">{text}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+</Layout>

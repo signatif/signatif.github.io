@@ -1,47 +1,121 @@
 @import "tailwindcss";
-@import "@fontsource/ibm-plex-sans/400.css";
-@import "@fontsource/ibm-plex-sans/500.css";
-@import "@fontsource/ibm-plex-sans/600.css";
-@import "@fontsource/ibm-plex-mono/400.css";
-@import "@fontsource/ibm-plex-mono/500.css";
-
-@custom-variant dark (&:where(.dark, .dark *));
+@import "@fontsource-variable/archivo/wdth.css";
+@import "@fontsource/spline-sans-mono/400.css";
+@import "@fontsource/spline-sans-mono/500.css";
+@import "@fontsource/spline-sans-mono/600.css";
+@import "@fontsource/jost/500.css";
 
 @theme {
-  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: "Archivo Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-futura: "Jost", "Futura", ui-sans-serif, sans-serif;
 
-  /* seal — vermilion accent, used sparingly */
-  --color-seal-50: #fbf0ec;
-  --color-seal-100: #f6ddd4;
-  --color-seal-200: #ecb8a9;
-  --color-seal-300: #de8f79;
-  --color-seal-400: #d0654c;
-  --color-seal-500: #c5402d;
-  --color-seal-600: #a83524;
-  --color-seal-700: #8a2c1e;
+  /* instrument paper */
+  --color-paper: #f6f8fa;
+  --color-panel: #ffffff;
+  --color-rule: #c7d3dd;
+  --color-rule-faint: #e7edf2;
 
-  /* ink — neutral text and surfaces */
-  --color-ink-50: #f6f7f9;
-  --color-ink-100: #eceef1;
-  --color-ink-200: #d5dae1;
-  --color-ink-300: #b0b9c6;
-  --color-ink-400: #8592a5;
-  --color-ink-500: #66748a;
-  --color-ink-600: #505d71;
-  --color-ink-700: #414c5d;
-  --color-ink-800: #2c3543;
-  --color-ink-900: #1d2530;
-  --color-ink-950: #121821;
+  /* engraved ink */
+  --color-ink: #17222e;
+  --color-ink-2: #4e5d6d;
+  --color-ink-3: #7e8b99;
+
+  /* engraving blue — structure */
+  --color-azure-50: #eef4f9;
+  --color-azure-100: #dce9f2;
+  --color-azure-600: #25618c;
+  --color-azure-700: #1d4c6f;
+
+  /* seal vermilion — stamps and critical states only */
+  --color-seal-100: #f7e0d9;
+  --color-seal-500: #c74a35;
+  --color-seal-600: #a93a28;
+
+  /* calibration green — verified states */
+  --color-verify-100: #dcf0e7;
+  --color-verify-700: #17604a;
+
+  --shadow-panel: 0 1px 2px rgb(23 34 46 / 0.05), 0 10px 32px rgb(23 34 46 / 0.07);
 }
 
 @layer base {
-  ::selection {
-    background-color: var(--color-seal-100);
-    color: var(--color-ink-900);
+  :focus-visible {
+    outline: 2px solid var(--color-azure-600);
+    outline-offset: 2px;
   }
-  .dark ::selection {
-    background-color: var(--color-seal-700);
-    color: var(--color-ink-50);
+  ::selection {
+    background-color: var(--color-azure-100);
+    color: var(--color-ink);
+  }
+}
+
+/* display voice: Archivo at wide width */
+@utility expanded {
+  font-stretch: 118%;
+}
+@utility expanded-wide {
+  font-stretch: 125%;
+}
+
+/* registry label voice */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* fine ruler ticks — the measurement motif */
+@utility vernier {
+  height: 7px;
+  background-image: repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 10px);
+}
+
+/* faint certificate ruling */
+@utility cert-grid {
+  background-image:
+    linear-gradient(to right, var(--color-rule-faint) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-rule-faint) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@utility animate-rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes thump {
+  0% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(0.97);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@utility animate-thump {
+  animation: thump 0.28s cubic-bezier(0.2, 1.2, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise,
+  .animate-thump {
+    animation: none;
   }
 }

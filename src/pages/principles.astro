@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Guilloche from '../components/Guilloche.astro';
+
+const letters = [
+  { letter: 'S', word: 'Sealed', text: 'Every trusted artifact is cryptographically sealed: independent co-signatures cover the same canonical payload, one per trust dimension — data, person, time, location, environment, and others defined by the scheme. Convergence of independent attestations, not single-signer authority, establishes trustworthiness.' },
+  { letter: 'I', word: 'Interoperable', text: 'The framework is scheme-independent. One verification pipeline and one coverage-report format serve many application schemes; scheme-specific rules enter through published registries and deployment profiles rather than forked technology.' },
+  { letter: 'G', word: 'Graduated', text: 'Trustworthiness is graduated, not binary. The verifier produces an objective coverage report of hard and soft check results; the scheme’s classification policy maps it to a classification label; the verifier’s acceptance policy turns the label into a decision.' },
+  { letter: 'N', word: 'Non-repudiable', text: 'Issuance is attributable and undeniable. Authority is exercised by threshold quorum and by federated trust authorities spanning organizational boundaries — never by an unaccountable single key — and inclusion in publicly auditable transparency logs provides third-party evidence of what was issued.' },
+  { letter: 'A', word: 'Anchored', text: 'Signing authority flows through a delegation hierarchy with the authorization scope narrowing monotonically at every link, and every verification path terminates at a root anchor in the trust anchor bundle. Verification requires no phone-home to the issuer and no proprietary component.' },
+  { letter: 'T', word: 'Trust', text: 'The domain of the framework is trust: the establishment, assessment, and withdrawal of confidence in signed artifacts. Trust is graduated, and it is a lifecycle — granted authority can be withdrawn through threshold-gated revocation that propagates to every transitively bound artifact.' },
+  { letter: 'I', word: 'Infrastructure', text: 'Signatif operates at the infrastructure level — shared anchors, logs, and registries independent of any single application — beneath any product that needs verifiable artifacts.' },
+  { letter: 'F', word: 'Framework', text: 'Not a product or protocol. Requirements that independent implementations conform to, and that domain-specific profiles instantiate — with conformance classes that make "conforming" testable.' },
+];
+
+const themes = [
+  {
+    title: 'Authority and delegation',
+    items: [
+      'Cryptographic scope enforcement — scope is a signed field checked at every link, not an external policy document',
+      'Threshold signing at every level — no single point of cryptographic compromise anywhere in the graph',
+      'Federated trust authorities — threshold groups of independent organizations sharing one aggregate key',
+      'Topology flexibility — hierarchical, federated, cross-recognized, and mesh profiles as first-class citizens',
+    ],
+  },
+  {
+    title: 'Multi-party attestation',
+    items: [
+      'Multi-party co-signed artifacts — several signers attest the same canonical payload',
+      'Multi-dimensional reality attestation — time, location, and environment as cryptographic dimensions, not metadata',
+      'Cross-domain trust fusion — co-signatures from independent roots carried on one artifact',
+    ],
+  },
+  {
+    title: 'Scope and binding',
+    items: [
+      'Live scope conditions — executable predicates evaluated at verification time against content and context',
+      'Revocation propagation — revoking authority state invalidates every transitively bound artifact, across all dimensions and chains',
+      'Challenge-response authenticity — nonce-bound fresh artifacts prove a live key, defeating replay of static copies',
+    ],
+  },
+  {
+    title: 'Transparency and time',
+    items: [
+      'Mandatory transparency — inclusion in a recognized log is a verification requirement, not a courtesy',
+      'Multi-log attestation — M-of-K independent logs, so no single operator controls the record',
+      'External time anchoring — signing time established by independent time sources, never the signer’s clock alone',
+    ],
+  },
+  {
+    title: 'Trust assessment',
+    items: [
+      'Graduated trust — labels reflect the depth and breadth of dimensional coverage, not just primary-signature validity',
+      'Risk-based acceptance — verifiers apply their own policy to the label for each decision context',
+      'Deterministic reporting — identical verifier state yields identical coverage reports',
+    ],
+  },
+];
+---
+<Layout
+  title="Principles — Signatif"
+  description="The eight normative principles behind Signatif — Sealed, Interoperable, Graduated, Non-repudiable, Anchored, Trust, Infrastructure, Framework — and the design themes they come from."
+>
+  <PageHeader
+    eyebrow="Principles"
+    title="Eight letters, each one a requirement"
+    lede="The name is a backronym over the properties the standard makes normative. They exist to distinguish a trust infrastructure for persistent artifacts from infrastructures designed for server-identity authentication."
+  />
+
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="shadow-panel relative overflow-hidden rounded-lg border border-rule bg-panel">
+      <Guilloche class="absolute -right-20 -top-20 size-72 text-azure-600/20" rings={24} seed={3} />
+      <div class="relative overflow-x-auto">
+        <table class="w-full min-w-[46rem] border-collapse text-left">
+          <thead>
+            <tr class="border-b border-rule">
+              <th class="w-16 px-6 py-4 label-mono text-ink-3">Letter</th>
+              <th class="w-44 px-2 py-4 label-mono text-ink-3">Property</th>
+              <th class="px-6 py-4 label-mono text-ink-3">What the standard requires</th>
+            </tr>
+          </thead>
+          <tbody>
+            {letters.map(({ letter, word, text }) => (
+              <tr class="border-b border-rule-faint align-top last:border-b-0">
+                <td class="px-6 py-5"><span class="expanded-wide font-mono text-lg font-semibold text-seal-600">{letter}</span></td>
+                <td class="px-2 py-5 text-[15px] font-semibold text-ink">{word}</td>
+                <td class="max-w-2xl px-6 py-5 text-sm leading-relaxed text-ink-2">{text}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Where the letters come from</h2>
+      <p class="mt-3 max-w-2xl text-ink-2">
+        Beneath the eight letters, the standard groups its design themes —
+        each theme backing at least one requirements class.
+      </p>
+      <div class="mt-10 grid gap-x-12 gap-y-10 lg:grid-cols-2">
+        {themes.map(({ title, items }) => (
+          <div>
+            <div class="flex items-center gap-4">
+              <h3 class="text-[15px] font-semibold text-ink">{title}</h3>
+              <span class="vernier flex-1 text-rule"></span>
+            </div>
+            <ul class="mt-4 space-y-2.5">
+              {items.map((item) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-ink-2">
+                  <span class="mt-[9px] size-1 shrink-0 rounded-full bg-azure-600"></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <div class="relative overflow-hidden rounded-lg border border-rule-faint bg-paper p-6">
+          <Guilloche class="absolute -bottom-14 -right-14 size-44 text-seal-600/15" rings={18} seed={6} />
+          <h3 class="text-[15px] font-semibold text-ink">Not a criticism of PKI</h3>
+          <p class="mt-2 relative text-sm leading-relaxed text-ink-2">
+            These principles address the persistent-artifact trust problem
+            specifically. PKI remains the appropriate, mature technology for
+            TLS, code signing under active policy enforcement, and identity
+            binding — and PKI-like deployments are one configuration of the
+            Signatif framework, not a rejected alternative.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

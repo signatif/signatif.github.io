@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Guilloche from '../components/Guilloche.astro';
+---
+<Layout
+  title="About — Signatif"
+  description="Signatif is the Sealed Interoperable Graduated Non-repudiable Anchored Trust Infrastructure Framework, a CalConnect standard for verifiable artifacts in regulated industries."
+>
+  <PageHeader
+    eyebrow="About"
+    title="A standard for verifiable artifacts, developed in CalConnect"
+    lede="Signatif — the Sealed Interoperable Graduated Non-repudiable Anchored Trust Infrastructure Framework — is developed in CalConnect, The Calendaring and Scheduling Consortium."
+  />
+
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+      <div class="max-w-2xl space-y-5 leading-relaxed text-ink-2">
+        <p>
+          Signatif specifies a trust infrastructure for artifacts whose
+          trustworthiness carries legal, economic, or safety consequences:
+          conformity certificates, calibration records, test results, and
+          compliance attestations issued in regulated industries.
+        </p>
+        <p>
+          The framework binds signing authority to a multi-dimensional
+          authorization scope, establishes artifact trustworthiness through
+          the convergence of independent attestations from multiple trust
+          dimensions, and treats trust as a lifecycle — granted, sustained,
+          and withdrawn through formal threshold-gated mechanisms.
+        </p>
+        <p>
+          The standard defines requirements, not products. Fourteen
+          requirements classes — from architecture and artifact format
+          through verification, transparency, revocation, and algorithm
+          agility — each carry a matching conformance class, so
+          "conforming implementation" is a testable claim. Registries are
+          maintained by implementing schemes, which keeps national and
+          regulatory algorithm choices where they belong.
+        </p>
+        <div class="border-l-2 border-seal-600 pl-5">
+          <p class="expanded text-lg font-semibold text-ink">The name</p>
+          <p class="mt-2 text-ink-2">
+            From Latin <span class="italic">signare</span> — to mark with a
+            seal, to sign; the root of <em>sign</em>, <em>signature</em>,
+            and <em>signet</em>. The premise is in the stem:
+            trustworthiness is established by what is verifiably signed,
+            not by who is trusted.
+          </p>
+        </div>
+      </div>
+
+      <aside class="space-y-6">
+        <div class="shadow-panel relative overflow-hidden rounded-lg border border-rule bg-panel p-6">
+          <Guilloche class="absolute -bottom-16 -right-16 size-52 text-azure-600/20" rings={20} seed={5} />
+          <p class="label-mono relative text-ink-3">At a glance</p>
+          <dl class="relative mt-4 divide-y divide-rule-faint">
+            {[
+              ['Name', 'Signatif'],
+              ['Expands to', 'Sealed Interoperable Graduated Non-repudiable Anchored Trust Infrastructure Framework'],
+              ['Developed in', 'CalConnect'],
+              ['Form', 'Requirements + conformance classes'],
+              ['License', 'Standard source on GitHub'],
+            ].map(([k, v]) => (
+              <div class="grid gap-1 py-3 sm:grid-cols-[7.5rem_1fr] sm:gap-3">
+                <dt class="text-xs uppercase tracking-wider text-ink-3">{k}</dt>
+                <dd class="text-sm font-medium text-ink">{v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+        <div class="rounded-lg border border-rule-faint bg-panel p-6">
+          <p class="label-mono text-ink-3">Get involved</p>
+          <ul class="mt-4 space-y-3 text-sm text-ink-2">
+            <li><a href="https://github.com/CalConnect/cc-signatif" class="font-medium text-azure-700 transition-colors hover:text-ink">Read and clone the standard</a></li>
+            <li><a href="https://github.com/CalConnect/cc-signatif/issues" class="font-medium text-azure-700 transition-colors hover:text-ink">Open an issue</a></li>
+            <li><a href="https://www.calconnect.org/" class="font-medium text-azure-700 transition-colors hover:text-ink">Participate via CalConnect</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,217 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Guilloche from '../components/Guilloche.astro';
+
+const authorities = [
+  {
+    term: 'Root trust authority',
+    text: 'The top of a trust hierarchy. Its public key is a trust anchor, distributed in verifiers’ trust anchor bundles. Root keys are exercised by threshold quorum, never by a single holder.',
+  },
+  {
+    term: 'Delegated trust authority',
+    text: 'An authority that receives signing power from another authority through a signed delegation carrying a narrowed authorization scope. Delegation chains may be many levels deep.',
+  },
+  {
+    term: 'Federated trust authority',
+    text: 'A threshold group of independent organizations sharing one aggregate key, so that no single organization controls the authority. Cross-organizational recognition happens here, not only at the top.',
+  },
+  {
+    term: 'End certificate',
+    text: 'The credential that binds a concrete signing key to the narrowest scope in the chain — for example, a laboratory accredited for a class of measurements.',
+  },
+  {
+    term: 'Trusted artifact',
+    text: 'The signed object being verified: a certificate, report, calibration record, or attestation. It carries co-signatures and is the convergence point of the whole model.',
+  },
+];
+
+const scopeJson = `{
+  "dimensions": {
+    "activity": ["calibration"],
+    "instrument_class": ["class_m"],
+    "geography": ["eu"]
+  },
+  "conditions": [
+    "lab.temperature_c within [18, 26]",
+    "operator.certificate not expired"
+  ]
+}`;
+
+const dimensions = [
+  { term: 'Authority', text: 'Who is entitled to issue — proven by the delegation chain from a root anchor.' },
+  { term: 'Person', text: 'Which certified human operated or attested — a co-signature from a person-level key.' },
+  { term: 'Time', text: 'When it was produced — anchored to an independent time source, not the signer’s clock.' },
+  { term: 'Location', text: 'Where it was produced — backed by its own attestation tree.' },
+  { term: 'Environment', text: 'Under what conditions — temperature, process state, or other scheme-defined context.' },
+  { term: 'Extensible', text: 'Schemes define further dimensions; each becomes a cryptographic co-signature, not metadata.' },
+];
+---
+<Layout
+  title="Framework — Signatif"
+  description="How Signatif models trust: authorities, delegation with monotonic scope narrowing, multi-dimensional artifacts, threshold signing, and offline verification from trust anchors."
+>
+  <PageHeader
+    eyebrow="Framework"
+    title="A trust graph over signed artifacts — not a hierarchy over identities"
+    lede="Traditional PKI binds a key to an identity. Signatif binds an artifact to the real-world conditions under which it was produced, and makes those bindings verifiable by anyone, offline, years later."
+  />
+
+  <!-- the problem -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">The problem it solves</h2>
+      <div class="max-w-2xl space-y-4 text-ink-2">
+        <p>
+          Regulated industries issue conformity certificates, test results,
+          calibration records, and compliance attestations whose
+          trustworthiness carries legal, economic, and safety consequences.
+          These artifacts must be verifiable by inspectors, customs
+          authorities, and trading partners across organizational and
+          jurisdictional boundaries — often years or decades after issuance.
+        </p>
+        <p>
+          A pharmaceutical batch release must demonstrate not just that a
+          signing key was valid, but that the batch came from an authorized
+          manufacturer, was inspected by a certified operator, was made under
+          compliant conditions, and was released at a verifiable time. No
+          existing infrastructure asserts all of that in one verifiable object.
+        </p>
+        <ul class="space-y-2.5 pt-2 text-sm">
+          <li class="flex gap-3"><span class="mt-2 size-1 shrink-0 rounded-full bg-seal-600"></span>PKI binds keys to identities — not artifacts to production conditions.</li>
+          <li class="flex gap-3"><span class="mt-2 size-1 shrink-0 rounded-full bg-seal-600"></span>Blockchain systems give immutability without scope enforcement or revocation propagation.</li>
+          <li class="flex gap-3"><span class="mt-2 size-1 shrink-0 rounded-full bg-seal-600"></span>Code-signing transparency covers provenance, not multi-dimensional convergence.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="vernier mx-auto max-w-6xl px-6 text-rule-faint"></div>
+
+  <!-- authorities -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Authorities and the trust graph</h2>
+    <p class="mt-3 max-w-2xl text-ink-2">
+      Authority flows through signed delegations. The result is a directed
+      acyclic trust graph — not a single mandated hierarchy — admitting
+      hierarchical, federated, cross-recognized, and mesh topologies as
+      first-class profiles.
+    </p>
+    <dl class="mt-8 grid gap-px overflow-hidden rounded-lg border border-rule-faint bg-rule-faint sm:grid-cols-2 lg:grid-cols-3">
+      {authorities.map(({ term, text }) => (
+        <div class="bg-panel p-6">
+          <dt class="text-[15px] font-semibold text-ink">{term}</dt>
+          <dd class="mt-2 text-sm leading-relaxed text-ink-2">{text}</dd>
+        </div>
+      ))}
+      <div class="relative overflow-hidden bg-panel p-6">
+        <Guilloche class="absolute -bottom-16 -right-16 size-48 text-azure-600/25" rings={20} seed={4} />
+        <dt class="text-[15px] font-semibold text-ink">The invariant</dt>
+        <dd class="mt-2 text-sm leading-relaxed text-ink-2">
+          At every delegation link, the authorization scope narrows
+          monotonically. Widening any scope dimension at any point is a hard
+          verification failure — checkable from the signatures alone, with no
+          external policy documents.
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- scope -->
+  <section class="border-y border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Authorization scope</h2>
+          <p class="mt-3 max-w-md text-ink-2">
+            The scope of a trust authority is a first-class signed field:
+            a multi-dimensional boundary of what the authority may sign,
+            carried in every certificate and enforced at every link.
+          </p>
+          <div class="shadow-panel mt-8 rounded-lg border border-rule bg-panel p-5 font-mono text-xs">
+            <p class="label-mono mb-3 text-ink-3">Scope — illustrative</p>
+            <pre class="overflow-x-auto leading-relaxed text-ink"><code>{scopeJson}</code></pre>
+            <p class="mt-3 text-[11px] leading-relaxed text-ink-3">
+              Conditions are predicates evaluated at verification time
+              against the artifact’s content and context.
+            </p>
+          </div>
+        </div>
+        <dl class="grid content-start gap-px overflow-hidden rounded-lg border border-rule-faint bg-rule-faint sm:grid-cols-2">
+          {dimensions.map(({ term, text }) => (
+            <div class="bg-paper p-6">
+              <dt class="label-mono text-azure-700">{term}</dt>
+              <dd class="mt-2.5 text-sm leading-relaxed text-ink-2">{text}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- artifact -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">The trusted artifact</h2>
+      <div class="max-w-2xl space-y-4 text-ink-2">
+        <p>
+          An artifact is signed over a canonical payload — a deterministic
+          byte serialization — so that every verifier hashes exactly the same
+          bytes. On that payload, independent signers leave co-signatures:
+          one per trust dimension, each backed by its own attestation tree.
+        </p>
+        <p>
+          Trustworthiness emerges from convergence: multiple independent
+          attestations of authority, person, time, location, and environment
+          meeting on one verifiable record — not from the authority of a
+          single signer.
+        </p>
+        <p>
+          Artifacts can carry their delegation chain inline for
+          network-free verification, or transparency-log references that a
+          connected verifier resolves and caches on first encounter. The
+          same artifact can be presented as a compact barcode passport with
+          the key fingerprint and validity period for scanning environments.
+        </p>
+        <p class="border-l-2 border-azure-600 pl-4 text-sm text-ink-2">
+          Threshold signing applies at every level: a quorum of key holders
+          exercises a root or delegated authority, eliminating single points
+          of cryptographic compromise.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="vernier mx-auto max-w-6xl px-6 text-rule-faint"></div>
+
+  <!-- offline -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Anchors and offline verification</h2>
+      <div class="max-w-2xl space-y-4 text-ink-2">
+        <p>
+          Every verification path terminates at a root anchor — a public key
+          the verifier has chosen to trust, distributed as a trust anchor
+          bundle. Verification requires no phone-home to any issuer and no
+          proprietary component.
+        </p>
+        <p>
+          A verifier works offline using the anchor bundle, cached
+          revocation lists within their validity or grace period, cached
+          transparency tree heads with inclusion proofs, and embedded or
+          hybrid chains. Offline verification produces the same
+          classification label as online verification, except where
+          freshness-dependent checks cannot be satisfied.
+        </p>
+        <p class="text-sm text-ink-3">
+          The standard itself specifies this as fourteen requirements
+          classes across architecture, artifact format, algorithms,
+          threshold signing, scope, revocation, transparency, verification,
+          key lifecycle, delivery, ceremonies, deployment manifests,
+          governance, and algorithm agility — each with a matching
+          conformance class.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

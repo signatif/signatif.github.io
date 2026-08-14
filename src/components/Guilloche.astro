@@ -1,0 +1,29 @@
+---
+interface Props {
+  class?: string;
+  rings?: number;
+  seed?: number;
+}
+const { class: className = "size-40", rings = 24, seed = 1 } = Astro.props;
+
+const cx = 100;
+const cy = 100;
+const paths: string[] = [];
+for (let i = 0; i < rings; i++) {
+  const base = 6 + i * 3.1;
+  const amp = 9 + 5 * Math.sin(i * 0.7 + seed);
+  const k = 6 + ((i * 3 + Math.floor(seed * 7)) % 5);
+  let d = "";
+  for (let a = 0; a <= 360; a += 3) {
+    const t = (a * Math.PI) / 180;
+    const r = base + amp * Math.sin(k * t + i * 0.37);
+    const x = cx + r * Math.cos(t);
+    const y = cy + r * Math.sin(t);
+    d += `${a === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`;
+  }
+  paths.push(d + "Z");
+}
+---
+<svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="0.45" class={className} aria-hidden="true">
+  {paths.map((d) => <path d={d} />)}
+</svg>

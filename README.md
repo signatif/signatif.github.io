@@ -5,7 +5,7 @@ Sealed Interoperable Graduated Non-repudiable Anchored Trust Infrastructure
 Framework, a CalConnect standard.
 
 Built with Astro, Vue islands, and Tailwind CSS (via the Vite plugin).
-Fonts are self-hosted (IBM Plex Sans, IBM Plex Mono).
+Fonts are self-hosted (Archivo variable, Spline Sans Mono, Jost).
 
 ## Commands
 

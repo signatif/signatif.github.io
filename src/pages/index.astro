@@ -1,22 +1,137 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import Principles from '../components/Principles.astro';
-import Pipeline from '../components/Pipeline.astro';
+import Certificate from '../components/Certificate.astro';
 import VerifierDemo from '../components/VerifierDemo.vue';
-import Industries from '../components/Industries.astro';
+
+const facts = [
+  { label: 'Organization', value: 'CalConnect' },
+  { label: 'Verification', value: 'Offline capable' },
+  { label: 'Algorithms', value: 'Post-quantum agile' },
+  { label: 'Attestation', value: 'Multi-dimensional' },
+];
+
+const letters = [
+  { letter: 'S', word: 'Sealed', text: 'Co-signatures over a canonical payload, one per trust dimension.' },
+  { letter: 'I', word: 'Interoperable', text: 'One pipeline and report format; scheme rules enter through registries.' },
+  { letter: 'G', word: 'Graduated', text: 'Coverage report, classification label, acceptance decision.' },
+  { letter: 'N', word: 'Non-repudiable', text: 'Threshold quorum, ceremony records, transparency logs.' },
+  { letter: 'A', word: 'Anchored', text: 'Every path ends at a declared trust anchor — fully offline.' },
+  { letter: 'T', word: 'Trust', text: 'Establishment, assessment, and withdrawal of confidence.' },
+  { letter: 'I', word: 'Infrastructure', text: 'Shared anchors, logs, and registries beneath any application.' },
+  { letter: 'F', word: 'Framework', text: 'Requirements that conforming implementations and profiles share.' },
+];
+
+const steps = [
+  { n: '1', title: 'Seal and delegate', text: 'Authorities sign artifacts; authorization scope narrows monotonically at every delegation link.' },
+  { n: '2', title: 'Verify', text: 'Hard checks short-circuit to rejected; soft checks accumulate into an objective coverage report.' },
+  { n: '3', title: 'Classify', text: 'The scheme’s published policy maps the report to a label — a pure, deterministic function.' },
+  { n: '4', title: 'Accept', text: 'The verifier’s own risk policy turns the label into a decision for its context.' },
+];
+
+const domains = [
+  { title: 'Legal metrology', text: 'Calibration and type-approval certificates, verifiable decades after issuance.' },
+  { title: 'Pharmaceuticals', text: 'Batch release with manufacturer, operator, conditions, and time each attested.' },
+  { title: 'Food safety', text: 'Inspection and provenance records across supply chains and jurisdictions.' },
+  { title: 'Defense procurement', text: 'Component provenance with revocation that propagates when trust is withdrawn.' },
+];
 ---
 <Layout
   title="Signatif — Evidence, not faith."
   description="Signatif is an open trust infrastructure framework for verifiable artifacts in regulated industries: sealed, interoperable, graduated, non-repudiable, anchored."
 >
-  <Hero />
-  <Principles />
-  <Pipeline />
-  <section id="verifier" class="mx-auto max-w-6xl px-6 py-16 md:py-20">
-    <div class="max-w-2xl">
-      <h2 class="text-2xl font-semibold tracking-tight text-ink-900 dark:text-ink-50 md:text-3xl">Verifier demo</h2>
-      <p class="mt-3 text-ink-600 dark:text-ink-300">
+  <!-- hero -->
+  <section class="border-b border-rule-faint">
+    <div class="mx-auto grid max-w-6xl items-center gap-16 px-6 pb-16 pt-14 md:pt-20 lg:grid-cols-[1.05fr_0.95fr]">
+      <div class="animate-rise">
+        <p class="label-mono text-azure-600">A CalConnect standard</p>
+        <h1 class="expanded mt-4 text-[2.75rem] font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl">
+          Evidence, not faith.
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2">
+          Signatif is an open framework for sealing, delegating, and verifying
+          artifacts in regulated industries. It replaces binary trust with
+          graduated, reproducible evidence — computed the same way by every
+          conforming verifier.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3">
+          <a
+            href="https://github.com/CalConnect/cc-signatif"
+            class="rounded-md bg-ink px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-azure-700"
+          >
+            Read the standard
+          </a>
+          <a href="/verification/" class="text-sm font-medium text-azure-700 transition-colors hover:text-ink">
+            How verification works
+          </a>
+        </div>
+        <dl class="mt-12 grid grid-cols-2 gap-6 border-t border-rule-faint pt-6 lg:grid-cols-4">
+          {facts.map(({ label, value }) => (
+            <div>
+              <dt class="label-mono text-ink-3">{label}</dt>
+              <dd class="mt-1.5 text-sm font-medium text-ink">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <Certificate />
+    </div>
+  </section>
+
+  <!-- principles registry -->
+  <section class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div class="max-w-xl">
+        <h2 class="expanded text-2xl font-semibold tracking-tight text-ink md:text-3xl">The name is the architecture</h2>
+        <p class="mt-3 text-ink-2">
+          Signatif is a backronym: each letter names a property the standard
+          makes normative.
+        </p>
+      </div>
+      <a href="/principles/" class="label-mono text-azure-600 transition-colors hover:text-ink">All principles</a>
+    </div>
+    <div class="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-rule-faint bg-rule-faint sm:grid-cols-2 lg:grid-cols-4">
+      {letters.map(({ letter, word, text }) => (
+        <div class="bg-panel p-6 transition-colors hover:bg-azure-50/50">
+          <span class="expanded-wide text-4xl font-semibold text-azure-600/35">{letter}</span>
+          <h3 class="mt-4 text-[15px] font-semibold text-ink">{word}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-ink-2">{text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- pipeline -->
+  <section class="border-y border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <div class="max-w-xl">
+        <h2 class="expanded text-2xl font-semibold tracking-tight text-ink md:text-3xl">One pipeline, three decisions</h2>
+        <p class="mt-3 text-ink-2">
+          The standard separates what is verified, how it is graded, and
+          whether it is good enough — so schemes and verifiers can differ
+          without forking the machinery.
+        </p>
+      </div>
+      <ol class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {steps.map(({ n, title, text }) => (
+          <li class="rounded-lg border border-rule-faint bg-panel p-6">
+            <div class="flex items-center gap-3">
+              <span class="grid size-7 place-items-center rounded-full border border-azure-600 font-mono text-xs font-medium text-azure-700">{n}</span>
+              <span class="vernier flex-1 text-rule"></span>
+            </div>
+            <h3 class="mt-4 text-[15px] font-semibold text-ink">{title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-2">{text}</p>
+          </li>
+        ))}
+      </ol>
+      <a href="/verification/" class="label-mono mt-8 inline-block text-azure-600 transition-colors hover:text-ink">Verification in detail</a>
+    </div>
+  </section>
+
+  <!-- verifier demo -->
+  <section class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+    <div class="max-w-xl">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink md:text-3xl">The verifier, live</h2>
+      <p class="mt-3 text-ink-2">
         Toggle the checks. The coverage report is objective, the label is the
         scheme’s policy, and the decision is the verifier’s.
       </p>
@@ -25,5 +140,28 @@ import Industries from '../components/Industries.astro';
       <VerifierDemo client:load />
     </div>
   </section>
-  <Industries />
+
+  <!-- domains -->
+  <section class="border-t border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div class="max-w-xl">
+          <h2 class="expanded text-2xl font-semibold tracking-tight text-ink md:text-3xl">Built for artifacts that must not lie</h2>
+          <p class="mt-3 text-ink-2">
+            Where a certificate carries legal, economic, or safety
+            consequences, "the key was valid" is not enough.
+          </p>
+        </div>
+        <a href="/domains/" class="label-mono text-azure-600 transition-colors hover:text-ink">All domains</a>
+      </div>
+      <div class="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+        {domains.map(({ title, text }) => (
+          <div class="border-t-2 border-rule pt-4">
+            <h3 class="text-[15px] font-semibold text-ink">{title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-2">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 </Layout>

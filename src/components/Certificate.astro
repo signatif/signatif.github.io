@@ -1,0 +1,59 @@
+---
+import Guilloche from './Guilloche.astro';
+
+const rows = [
+  { k: 'registry', v: 'Nº 1042' },
+  { k: 'chain', v: 'root-a → nmi → lab' },
+  { k: 'scope', v: 'metrology · class M' },
+  { k: 'dimensions', v: 'authority · person · time' },
+  { k: 'transparency', v: 'log #1041 · included' },
+  { k: 'freshness', v: 'within window' },
+];
+---
+<div class="animate-rise relative">
+  <div class="absolute -right-10 -top-10 -z-10 text-azure-600/40" aria-hidden="true">
+    <Guilloche class="size-56" rings={26} seed={2} />
+  </div>
+  <figure class="shadow-panel relative rounded-lg border border-rule bg-panel">
+    <div class="cert-grid m-2 rounded-md border border-rule-faint p-5 md:p-6">
+      <div class="rounded-sm bg-panel/85 p-4 md:p-5">
+        <figcaption class="flex items-center justify-between border-b border-rule-faint pb-3">
+          <span class="label-mono text-ink-3">Calibration certificate</span>
+          <span class="font-mono text-[11px] text-azure-600">v1</span>
+        </figcaption>
+        <dl class="mt-3 space-y-2">
+          {rows.map(({ k, v }) => (
+            <div class="flex justify-between gap-4 font-mono text-xs">
+              <dt class="text-ink-3">{k}</dt>
+              <dd class="text-right text-ink">{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <div class="mt-4 flex items-center justify-between border-t border-rule-faint pt-3">
+          <span class="label-mono text-ink-3">Classification</span>
+          <span class="flex items-center gap-2 border border-verify-100 bg-verify-100/60 px-2 py-0.5 font-mono text-[11px] font-medium tracking-wide text-verify-700">
+            <span class="size-1.5 rounded-full bg-verify-700"></span>
+            CERTIFIED
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- the seal -->
+    <svg
+      viewBox="0 0 120 120"
+      class="absolute -bottom-8 -right-6 size-28 rotate-[-8deg] text-seal-600"
+      aria-hidden="true"
+    >
+      <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.5"></circle>
+      <circle cx="60" cy="60" r="41" fill="none" stroke="currentColor" stroke-width="1"></circle>
+      <defs>
+        <path id="seal-ring" d="M 60,60 m -48,0 a 48,48 0 1,1 96,0 a 48,48 0 1,1 -96,0"></path>
+      </defs>
+      <text fill="currentColor" font-size="9.5" letter-spacing="2.6" font-family="Spline Sans Mono, monospace">
+        <textPath href="#seal-ring">VERIFIED · SIGNATIF · CALCONNECT ·</textPath>
+      </text>
+      <path d="M45 60.5 54.5 70 76 46.5" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </figure>
+  <p class="mt-10 font-mono text-[11px] text-ink-3">Illustrative artifact — verifiable offline, years after issuance.</p>
+</div>
