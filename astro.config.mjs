@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://signatif.github.io',
+  site: 'https://www.signatif.org',
   integrations: [vue(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

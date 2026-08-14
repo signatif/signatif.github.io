@@ -21,4 +21,5 @@ Fonts are self-hosted (Archivo variable, Spline Sans Mono, Jost).
 Pushes to `main` deploy via the GitHub Actions workflow in
 `.github/workflows/deploy.yml`. The repository must be named
 `signatif.github.io` under the `signatif` account, with Pages enabled and
-"GitHub Actions" selected as the build source.
+"GitHub Actions" selected as the build source. The custom domain
+`www.signatif.org` is configured in the repository's Pages settings.

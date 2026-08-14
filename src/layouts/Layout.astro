@@ -27,6 +27,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    <link rel="alternate" href={canonical} hreflang="en" />
     <meta name="twitter:card" content="summary" />
   </head>
   <body class="bg-paper font-sans text-ink antialiased">
