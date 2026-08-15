@@ -8,6 +8,7 @@ interface Props {
   description: string;
 }
 const { title, description } = Astro.props;
+const is404 = Astro.url.pathname.includes('404');
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
@@ -20,7 +21,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="theme-color" content="#f6f8fa" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {is404 ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta property="og:site_name" content="Signatif" />
     <meta property="og:title" content={title} />
