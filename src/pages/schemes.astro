@@ -1,0 +1,277 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Guilloche from '../components/Guilloche.astro';
+
+const steps = [
+  {
+    n: '1',
+    title: 'Map your hierarchy',
+    tag: 'authorities',
+    text: 'Map your real-world tiers onto root, delegated, and federated trust authorities down to end certificates. Choose a topology profile — hierarchical, federated, cross-recognized, or mesh — and set thresholds (for example 3-of-5 at the root).',
+  },
+  {
+    n: '2',
+    title: 'Define the authorization boundary',
+    tag: 'scope',
+    text: 'Declare the scope dimensions that matter in your domain — sector, product class, geography, lot — and the live conditions evaluated at verification time. Scope narrows monotonically at every delegation; that invariant is enforced for you.',
+  },
+  {
+    n: '3',
+    title: 'Populate your registries',
+    tag: 'registries',
+    text: 'A scheme owns its registries: algorithm identifiers (by class — classical, composite, post-quantum), format profiles, dimension tags, ceremony types. National and regulatory algorithm choices fit here, not in the standard.',
+  },
+  {
+    n: '4',
+    title: 'Choose your trust dimensions',
+    tag: 'dimensions',
+    text: 'Pick which aspects of reality become cryptographic co-signatures — authority, person, time, location, environment, or your own. Each claimed dimension is a conformance class with tests.',
+  },
+  {
+    n: '5',
+    title: 'Publish your policies',
+    tag: 'classification',
+    text: 'Define the classification policy that maps coverage reports to your labels, and the acceptance thresholds per decision context. Both are pure functions, published in the deployment manifest.',
+  },
+  {
+    n: '6',
+    title: 'Declare and claim conformance',
+    tag: 'manifest',
+    text: 'Write the deployment manifest — tiers, thresholds, transparency logs, migration phase — claim your /conf classes, and validate against the abstract test suite.',
+  },
+];
+
+const profiles = [
+  {
+    name: 'Fresh food traceability',
+    hierarchy: [
+      ['Food-safety authority consortium (root)', '3-of-5', 'Defines sector scope: fresh food, hazard classes'],
+      ['National food authority', '2-of-3', 'Narrows to geography and product category'],
+      ['Certification body', '1-of-1 / 2-of-3', 'Accredits producers; narrows to certification type'],
+      ['Producer / packer key', '1-of-1', 'End certificate; signs lot records'],
+      ['Lot record', '—', 'The trusted artifact — measurement of the batch'],
+    ],
+    scope: ['sector: fresh food', 'hazard class: cold-chain, allergen', 'geography: origin and processing', 'lot identifier'],
+    dimensions: [
+      ['Authority', 'delegation chain from the consortium root'],
+      ['Person', 'certified inspector co-signs the lot'],
+      ['Time', 'time authority anchors harvest and packing events'],
+      ['Location', 'origin and processing site attestations'],
+      ['Environment', 'cold-chain sensor co-signs transit temperatures'],
+    ],
+  },
+  {
+    name: 'Electronic components',
+    hierarchy: [
+      ['Industry consortium (root)', '4-of-7', 'Defines component sector scope and classes'],
+      ['Brand / ODM authority', '3-of-5', 'Narrows to product family and process'],
+      ['Fab or line authority', '2-of-3', 'Narrows to line and process step'],
+      ['Line batch key', '1-of-1', 'End certificate; signs batch records'],
+      ['Batch record', '—', 'The trusted artifact — the component lot'],
+    ],
+    scope: ['component family', 'process node / line', 'lot identifier', 'customer: OEM / distribution'],
+    dimensions: [
+      ['Authority', 'chain from the consortium root'],
+      ['Person', 'line quality engineer co-signs'],
+      ['Time', 'time authority anchors production time'],
+      ['Environment', 'handling conditions attested for the lot'],
+    ],
+  },
+];
+
+const dpp = [
+  { dpp: 'DPP record (structured product data)', signatif: 'Trusted artifact payload — versioned, canonically serialized' },
+  { dpp: 'QR data carrier on the product', signatif: 'Barcode and passport delivery: self-contained encoding with error correction, or a compact reference for connected verifiers' },
+  { dpp: 'Decentralized DPP registry', signatif: 'Transparency logs with mirrors and gossip — M-of-K multi-log attestation, no single operator' },
+  { dpp: 'Verifiable-credential representations', signatif: 'Composition annex: a VC becomes the payload; its single proof is replaced by dimensional co-signatures' },
+  { dpp: 'Economic operators, notified bodies, authorities', signatif: 'Trust authorities with scoped delegation — registration withdrawal propagates to their artifacts' },
+  { dpp: 'Market surveillance and border checks', signatif: 'Offline verification from the trust anchor bundle, with graded evidence for risk-based targeting' },
+  { dpp: 'Product lifecycle updates', signatif: 'Living artifacts accumulate attestations; successive versions carry explicit compatibility rules' },
+  { dpp: 'Decade-plus product lifetimes', signatif: 'Algorithm agility with a published classical → composite → post-quantum migration path' },
+];
+---
+<Layout
+  title="Schemes — Signatif"
+  description="How to build a scheme on Signatif: registries, scope dimensions, classification policies, worked profiles for food traceability and electronic components, and integration with the EU Digital Product Passport."
+>
+  <PageHeader
+    eyebrow="For schemes"
+    title="Build your domain on Signatif"
+    lede="Signatif is deliberately unfinished: the standard fixes the machinery — chains, scope, verification, transparency — while each scheme defines the domain. Here is what a scheme owns and the path from concept to claimed conformance."
+  />
+
+  <!-- what a scheme owns -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">What a scheme owns</h2>
+      <div>
+        <p class="max-w-2xl leading-relaxed text-ink-2">
+          A scheme is the organization — a sector consortium, a regulator, an
+          industry body — that instantiates Signatif for its domain. The
+          standard prescribes the requirements classes; the scheme decides
+          every domain-specific value, and mutual recognition between schemes
+          is itself standardized.
+        </p>
+        <ul class="mt-6 grid gap-2.5 sm:grid-cols-2">
+          {[
+            'Registries — algorithms by class, format profiles, dimension tags, ceremony types',
+            'Scope dimensions and live conditions for the domain',
+            'The set of trust dimensions and their attestation sources',
+            'Classification policy and acceptance thresholds',
+            'Deployment manifest — tiers, thresholds, logs, migration phase',
+            'Topology and conformance claims (/conf classes)',
+          ].map((item) => (
+            <li class="flex gap-2.5 text-sm leading-relaxed text-ink-2">
+              <span class="mt-[9px] size-1 shrink-0 rounded-full bg-azure-600"></span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- development path -->
+  <section class="border-y border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">The development path</h2>
+      <p class="mt-3 max-w-2xl text-ink-2">
+        From concept to a conforming deployment — each step lands in an
+        artifact the standard already defines.
+      </p>
+      <ol class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {steps.map(({ n, title, tag, text }) => (
+          <li class="rounded-lg border border-rule-faint bg-panel p-6">
+            <div class="flex items-center gap-3">
+              <span class="grid size-7 place-items-center rounded-full border border-azure-600 font-mono text-xs font-medium text-azure-700">{n}</span>
+              <span class="vernier flex-1 text-rule"></span>
+              <span class="label-mono text-ink-3">{tag}</span>
+            </div>
+            <h3 class="mt-4 text-[15px] font-semibold text-ink">{title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink-2">{text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- worked profiles -->
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Two schemes, sketched</h2>
+    <p class="mt-3 max-w-2xl text-ink-2">
+      Illustrative profiles in the style of the standard’s supply-chain
+      annex — every value here is a scheme decision, not a standard
+      requirement.
+    </p>
+    <div class="mt-10 space-y-10">
+      {profiles.map(({ name, hierarchy, scope, dimensions }) => (
+        <article class="rounded-lg border border-rule bg-panel shadow-panel">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-rule-faint px-6 py-4">
+            <h3 class="text-lg font-semibold tracking-tight text-ink">{name}</h3>
+            <p class="font-mono text-xs text-ink-3">illustrative profile</p>
+          </div>
+          <div class="grid gap-8 p-6 lg:grid-cols-2">
+            <div>
+              <p class="label-mono text-azure-700">Hierarchy and thresholds</p>
+              <table class="mt-3 w-full border-collapse text-left">
+                <tbody>
+                  {hierarchy.map(([tier, quorum, role]) => (
+                    <tr class="border-b border-rule-faint align-top last:border-b-0">
+                      <td class="py-2.5 pr-4 text-[13px] font-medium text-ink">{tier}</td>
+                      <td class="w-16 py-2.5 pr-4 font-mono text-xs text-seal-600">{quorum}</td>
+                      <td class="py-2.5 text-[13px] leading-relaxed text-ink-2">{role}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p class="label-mono mt-6 text-azure-700">Scope dimensions</p>
+              <p class="mt-2 font-mono text-xs leading-relaxed text-ink-2">{scope.join('  ·  ')}</p>
+            </div>
+            <div>
+              <p class="label-mono text-azure-700">Trust dimensions</p>
+              <dl class="mt-3 divide-y divide-rule-faint">
+                {dimensions.map(([dim, src]) => (
+                  <div class="grid gap-1 py-2.5 sm:grid-cols-[6.5rem_1fr] sm:gap-3">
+                    <dt class="text-[13px] font-semibold text-ink">{dim}</dt>
+                    <dd class="text-[13px] leading-relaxed text-ink-2">{src}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- DPP -->
+  <section id="eu-digital-product-passport" class="scroll-mt-24 border-t border-rule-faint bg-panel/60">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <div class="relative overflow-hidden">
+        <Guilloche class="absolute -right-24 -top-24 size-80 text-azure-600/15" rings={22} seed={11} />
+        <p class="label-mono text-azure-600">EU Digital Product Passport</p>
+        <h2 class="expanded relative mt-3 max-w-3xl text-2xl font-semibold tracking-tight text-ink md:text-3xl">
+          The verifiable substrate under a DPP scheme
+        </h2>
+        <p class="relative mt-4 max-w-3xl leading-relaxed text-ink-2">
+          The EU Ecodesign for Sustainable Products Regulation establishes the
+          Digital Product Passport: structured product data, a QR data
+          carrier, and a decentralized registry, with product-group
+          requirements arriving through delegated acts. A DPP scheme needs
+          exactly what Signatif specifies — and a Signatif scheme can carry
+          DPP records without waiting for the data model to stabilize.
+        </p>
+      </div>
+      <div class="mt-10 overflow-x-auto">
+        <table class="w-full min-w-[46rem] border-collapse text-left">
+          <thead>
+            <tr class="border-b border-rule">
+              <th class="py-3 pr-4 label-mono text-ink-3">DPP concept</th>
+              <th class="py-3 label-mono text-azure-700">Signatif mechanism</th>
+            </tr>
+          </thead>
+          <tbody>
+            {dpp.map(({ dpp: concept, signatif }) => (
+              <tr class="border-b border-rule-faint align-top last:border-b-0">
+                <th scope="row" class="w-72 py-4 pr-4 text-sm font-semibold text-ink">{concept}</th>
+                <td class="py-4 text-sm leading-relaxed text-ink-2">{signatif}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-10 grid gap-6 lg:grid-cols-2">
+        <div class="rounded-lg border border-rule-faint bg-panel p-6">
+          <h3 class="text-[15px] font-semibold text-ink">Why it fits</h3>
+          <ul class="mt-3 space-y-2">
+            {[
+              'No single registry operator: M-of-K multi-log transparency mirrors the decentralized-registry intent',
+              'Graded evidence lets market surveillance risk-target instead of accept-or-reject blindly',
+              'Offline verification at borders and inspection posts, from the anchor bundle alone',
+              'Revocation of an economic operator’s registration propagates to every bound passport artifact',
+              'A classical → composite → post-quantum migration path for decade-plus product lifetimes',
+            ].map((item) => (
+              <li class="flex gap-2.5 text-sm leading-relaxed text-ink-2">
+                <span class="mt-[9px] size-1 shrink-0 rounded-full bg-verify-700"></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="rounded-lg border border-rule-faint bg-panel p-6">
+          <h3 class="text-[15px] font-semibold text-ink">Positioning</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-2">
+            Signatif does not compete with DPP standardization: it is the
+            trust layer a DPP scheme claims conformance to. A DPP deployment
+            is a Signatif scheme — registries, scope, dimensions, policies —
+            whose payload schema is the DPP data model for its product
+            group, and whose carrier is the DPP QR code. As delegated acts
+            and credential formats evolve, the substrate underneath stays
+            conforming and testable.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
