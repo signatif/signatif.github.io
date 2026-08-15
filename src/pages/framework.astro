@@ -18,7 +18,7 @@ const authorities = [
   },
   {
     term: 'End certificate',
-    text: 'The credential that binds a concrete signing key to the narrowest scope in the chain — for example, a laboratory accredited for a class of measurements.',
+    text: 'The credential that binds a concrete signing key to the narrowest scope in the chain — for example, a laboratory, an instrument model, or an individual instrument.',
   },
   {
     term: 'Trusted artifact',
@@ -115,6 +115,30 @@ const dimensions = [
         </dd>
       </div>
     </dl>
+    <div class="shadow-panel mt-8 rounded-lg border border-rule bg-panel p-6">
+      <p class="label-mono text-azure-700">Illustration — legal metrology</p>
+      <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-3 font-mono text-[13px]">
+        <span class="border border-seal-500/50 bg-seal-100/40 px-2.5 py-1 font-medium text-seal-600">root (3-of-5)</span>
+        <span class="text-ink-3">→</span>
+        <span class="border border-rule bg-paper px-2.5 py-1 text-ink">nmi</span>
+        <span class="text-ink-3">→</span>
+        <span class="border border-rule bg-paper px-2.5 py-1 text-ink">lab</span>
+        <span class="text-ink-3">→</span>
+        <span class="border border-rule bg-paper px-2.5 py-1 text-ink">model</span>
+        <span class="text-ink-3">→</span>
+        <span class="border border-rule bg-paper px-2.5 py-1 text-ink">instrument</span>
+        <span class="text-ink-3">→</span>
+        <span class="border border-verify-700/40 bg-verify-100/50 px-2.5 py-1 font-medium text-verify-700">measurement</span>
+      </div>
+      <p class="mt-4 max-w-3xl text-sm leading-relaxed text-ink-2">
+        Five delegation tiers from the threshold root through the national
+        metrology institute and accredited laboratory down to the instrument
+        model and the individual instrument — and the digital artifact being
+        attested is the measurement itself. Scope narrows at every arrow:
+        country, then laboratory accreditation, then instrument class, then
+        the individual device.
+      </p>
+    </div>
   </section>
 
   <!-- scope -->
