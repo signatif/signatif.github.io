@@ -5,7 +5,7 @@ type TimeAnchor = 'fresh' | 'grace' | 'stale';
 type Label = 'certified' | 'verified' | 'attested' | 'rejected';
 
 const hard = reactive({ signature: true, scope: true, revocation: true });
-const dims = reactive({ person: true, time: true, location: false });
+const dims = reactive({ person: true, time: true, location: true });
 const soft = reactive({
   transparency: true,
   multiLog: true,

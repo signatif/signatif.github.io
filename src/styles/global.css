@@ -40,6 +40,9 @@
 }
 
 @layer base {
+  html {
+    scroll-padding-top: 5rem;
+  }
   :focus-visible {
     outline: 2px solid var(--color-azure-600);
     outline-offset: 2px;
