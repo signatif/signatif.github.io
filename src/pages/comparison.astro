@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SourceNote from '../components/SourceNote.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Guilloche from '../components/Guilloche.astro';
 
@@ -301,4 +302,8 @@ const hardForPki = [
       </div>
     </div>
   </section>
+
+  <div class="mx-auto max-w-6xl px-6 pb-6">
+    <SourceNote label="Annex B" href="https://github.com/CalConnect/cc-signatif/blob/main/spec/signatif-standard/sections/ab-pki-comparison.adoc" />
+  </div>
 </Layout>

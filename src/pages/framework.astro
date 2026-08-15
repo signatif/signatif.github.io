@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SourceNote from '../components/SourceNote.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Guilloche from '../components/Guilloche.astro';
 
@@ -238,4 +239,8 @@ const dimensions = [
       </div>
     </div>
   </section>
+
+  <div class="mx-auto max-w-6xl px-6 pb-6">
+    <SourceNote label="Clauses 7–8" href="https://github.com/CalConnect/cc-signatif/blob/main/spec/signatif-standard/sections/07-architecture.adoc" />
+  </div>
 </Layout>

@@ -1,0 +1,11 @@
+---
+interface Props {
+  label: string;
+  href: string;
+}
+const { label, href } = Astro.props;
+---
+<p class="mt-14 border-t border-rule-faint pt-6 font-mono text-xs text-ink-3">
+  Source: {label} of the standard —
+  <a href={href} class="text-azure-700 transition-colors hover:text-ink">CalConnect/cc-signatif</a>
+</p>
