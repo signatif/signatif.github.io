@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import terms from '../data/terms.json';
+
+const letters = [...new Set(terms.map((t) => t.term[0].toUpperCase()))];
+---
+<Layout
+  title="Glossary — Signatif"
+  description="The defined terms of the Signatif framework, from trust authorities and authorization scope to coverage reports and classification labels."
+>
+  <PageHeader
+    eyebrow="Glossary"
+    title="The vocabulary of the framework"
+    lede="Every defined term from clause 3 of the standard, in alphabetical order. Alternative names allowed by the standard appear in parentheses."
+  />
+
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <nav class="flex flex-wrap gap-x-5 gap-y-2" aria-label="Glossary index">
+      {letters.map((l) => (
+        <a href={`#${l}`} class="font-mono text-sm text-azure-700 transition-colors hover:text-ink">{l}</a>
+      ))}
+    </nav>
+
+    {letters.map((l) => (
+      <div class="mt-12 scroll-mt-24" id={l}>
+        <div class="flex items-center gap-4">
+          <h2 class="expanded-wide font-mono text-xl font-semibold text-seal-600">{l}</h2>
+          <span class="vernier flex-1 text-rule"></span>
+        </div>
+        <dl class="mt-6 grid gap-x-12 gap-y-7 md:grid-cols-2">
+          {terms.filter((t) => t.term[0].toUpperCase() === l).map(({ term, alt, def }) => (
+            <div class="border-t border-rule-faint pt-4">
+              <dt class="text-[15px] font-semibold text-ink">
+                {term}
+                {alt && <span class="font-normal text-ink-3"> ({alt})</span>}
+              </dt>
+              <dd class="mt-1.5 text-sm leading-relaxed text-ink-2">{def}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    ))}
+
+    <p class="mt-14 border-t border-rule-faint pt-6 font-mono text-xs text-ink-3">
+      Source: clause 3 of the Signatif standard —
+      <a href="https://github.com/CalConnect/cc-signatif" class="text-azure-700 transition-colors hover:text-ink">CalConnect/cc-signatif</a>
+    </p>
+  </section>
+</Layout>
