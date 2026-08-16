@@ -53,6 +53,12 @@
     background-color: var(--color-azure-100);
     color: var(--color-ink);
   }
+  /* prose links must be distinguishable without relying on color */
+  p a {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
 }
 
 /* display voice: Archivo at wide width */
@@ -122,5 +128,61 @@
   .animate-rise,
   .animate-thump {
     animation: none;
+  }
+}
+
+/* ---- print: the pages people will PDF ---- */
+@media print {
+  @page {
+    margin: 18mm 16mm;
+  }
+  html {
+    overflow-x: visible;
+    background: white;
+  }
+  body {
+    background: white;
+  }
+  header,
+  footer,
+  svg[aria-hidden='true'] {
+    display: none;
+  }
+  .animate-rise,
+  .animate-thump {
+    animation: none;
+  }
+  section {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+  .rounded-lg,
+  .shadow-panel {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  tr,
+  li {
+    break-inside: avoid;
+  }
+  /* wide tables must reflow to the page box, not clip in their scroll wrapper */
+  table {
+    min-width: 0;
+    width: 100%;
+  }
+  .overflow-x-auto {
+    overflow: visible;
+  }
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+  a {
+    color: inherit;
+  }
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.85em;
+    color: #4a5561;
   }
 }

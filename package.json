@@ -24,6 +24,7 @@
     "vue": "^3.5.41"
   },
   "devDependencies": {
+    "playwright": "^1.62.1",
     "satori": "^0.29.0"
   }
 }
