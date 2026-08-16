@@ -114,7 +114,7 @@ decision = accept(label)   # verifier policy</code></pre>
   <!-- three decisions -->
   <section class="mx-auto max-w-6xl px-6 py-14">
     <h2 class="expanded text-2xl font-semibold tracking-tight text-ink">Report, label, decision</h2>
-    <div class="mt-8 grid gap-4 lg:grid-cols-3">
+    <div class="mt-8 grid items-stretch gap-4 lg:grid-cols-[1fr_auto_1fr_auto_1fr] lg:gap-0">
       <div class="rounded-lg border border-rule-faint bg-panel p-6">
         <p class="label-mono text-ink-3">01 · Coverage report</p>
         <h3 class="mt-3 text-[15px] font-semibold text-ink">The evidence</h3>
@@ -122,6 +122,12 @@ decision = accept(label)   # verifier policy</code></pre>
           Produced by every conforming verifier, deterministically. No
           policy enters here — only what was checked and what held.
         </p>
+      </div>
+      <div class="hidden items-center px-2 lg:flex" aria-hidden="true">
+        <svg viewBox="0 0 48 12" class="h-3 w-12 text-azure-600/70" fill="none">
+          <line x1="0" y1="6" x2="38" y2="6" stroke="currentColor" stroke-width="1" stroke-dasharray="1 8" stroke-linecap="round"></line>
+          <line x1="46" y1="1" x2="46" y2="11" stroke="currentColor" stroke-width="1.25"></line>
+        </svg>
       </div>
       <div class="rounded-lg border border-rule-faint bg-panel p-6">
         <p class="label-mono text-ink-3">02 · Classification label</p>
@@ -132,6 +138,12 @@ decision = accept(label)   # verifier policy</code></pre>
           standard does not prescribe labels or thresholds; each scheme
           defines its own.
         </p>
+      </div>
+      <div class="hidden items-center px-2 lg:flex" aria-hidden="true">
+        <svg viewBox="0 0 48 12" class="h-3 w-12 text-azure-600/70" fill="none">
+          <line x1="0" y1="6" x2="38" y2="6" stroke="currentColor" stroke-width="1" stroke-dasharray="1 8" stroke-linecap="round"></line>
+          <line x1="46" y1="1" x2="46" y2="11" stroke="currentColor" stroke-width="1.25"></line>
+        </svg>
       </div>
       <div class="rounded-lg border border-rule-faint bg-panel p-6">
         <p class="label-mono text-ink-3">03 · Acceptance</p>
