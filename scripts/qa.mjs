@@ -55,17 +55,23 @@ const routes = (function walk(dir, prefix = '') {
 const idsByRoute = {};
 async function idsFor(route) {
   if (!idsByRoute[route]) {
-    const html = await readFile(join(dist, route, 'index.html'), 'utf8');
+    const file = route.endsWith('.html') ? join(dist, route) : join(dist, route, 'index.html');
+    const html = await readFile(file, 'utf8');
     idsByRoute[route] = new Set([...html.matchAll(/ id="([^"]+)"/g)].map((m) => m[1]));
   }
   return idsByRoute[route];
 }
 
+// standalone pages (served by GH Pages at unknown paths)
+const standalone = existsSync(join(dist, '404.html')) ? ['/404.html'] : [];
+
+const fileFor = (route) => (route.endsWith('.html') ? join(dist, route) : join(dist, route, 'index.html'));
+
 // 1. static link check over built HTML
 let linkCount = 0;
-for (const route of routes) {
+for (const route of [...routes, ...standalone]) {
   const ids = await idsFor(route);
-  const html = await readFile(join(dist, route, 'index.html'), 'utf8');
+  const html = await readFile(fileFor(route), 'utf8');
   for (const [, href] of html.matchAll(/<a\s[^>]*?href="([^"]+)"/g)) {
     if (href.startsWith('#')) {
       linkCount++;
@@ -95,7 +101,7 @@ for (const [vw, vh] of [[360, 800], [390, 844], [768, 1024], [1440, 900]]) {
   const page = await browser.newPage({ viewport: { width: vw, height: vh } });
   const errors = [];
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
-  for (const route of routes) {
+  for (const route of [...routes, ...standalone]) {
     await page.goto(`http://localhost:${port}${route}`, { waitUntil: 'networkidle' });
     const sw = await page.evaluate(() => document.documentElement.scrollWidth);
     if (sw > vw + 1) fail(`overflow ${vw}px ${route} (scrollWidth ${sw})`);
@@ -111,4 +117,4 @@ if (failures.length) {
   for (const f of failures) console.error(' -', f);
   process.exit(1);
 }
-console.log(`QA passed: ${routes.length} routes, ${linkCount} internal links, 4 viewports, no console errors`);
+console.log(`QA passed: ${routes.length + standalone.length} pages, ${linkCount} internal links, 4 viewports, no console errors`);

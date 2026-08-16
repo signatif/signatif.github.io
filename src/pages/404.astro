@@ -1,27 +1,91 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SealMark from '../components/SealMark.astro';
+import Guilloche from '../components/Guilloche.astro';
+
+const rows = [
+  { k: 'requested', v: '', id: 'req-path' },
+  { k: 'status', v: 'not issued' },
+  { k: 'chain', v: 'no path to anchor' },
+  { k: 'transparency', v: 'no inclusion proof' },
+];
 ---
 <Layout
   title="Page not found — Signatif"
   description="No verification path exists from this URL to any known page."
 >
-  <section class="mx-auto max-w-6xl px-6 py-24 md:py-32">
-    <div class="max-w-xl">
-      <p class="label-mono text-seal-600">404 — no path to anchor</p>
-      <h1 class="expanded mt-4 text-4xl font-semibold tracking-tight text-ink">
-        This artifact cannot be verified
-      </h1>
-      <p class="mt-4 text-lg leading-relaxed text-ink-2">
-        No verification path exists from this URL to any known page. The
-        resource may have been revoked, retired, or was never issued.
-      </p>
-      <div class="mt-8 flex items-center gap-2.5">
-        <SealMark class="size-5 text-seal-600" />
-        <a href="/" class="text-sm font-medium text-azure-700 transition-colors hover:text-ink">
-          Return to the registry
-        </a>
+  <section class="border-b border-rule-faint">
+    <div class="mx-auto grid max-w-6xl items-center gap-16 px-6 pb-16 pt-14 md:pt-20 lg:grid-cols-[1.05fr_0.95fr]">
+      <div class="animate-rise">
+        <p class="label-mono text-seal-600">404 — no path to anchor</p>
+        <h1 class="expanded mt-4 text-[2.75rem] font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl">
+          This artifact cannot be verified
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2">
+          No verification path exists from this URL to any known page. The
+          resource may have been revoked, retired, or was never issued.
+        </p>
+        <div class="mt-8 flex items-center gap-2.5">
+          <SealMark class="size-5 text-seal-600" />
+          <a href="/" class="text-sm font-medium text-azure-700 transition-colors hover:text-ink">
+            Return to the registry
+          </a>
+        </div>
+      </div>
+
+      <div class="animate-rise relative">
+        <div class="absolute -right-4 -top-10 -z-10 text-azure-600/25 xl:-right-10" aria-hidden="true">
+          <Guilloche class="size-56" rings={26} seed={2} />
+        </div>
+        <figure class="shadow-panel relative rounded-lg border border-rule bg-panel">
+          <div class="cert-grid m-2 rounded-md border border-rule-faint p-5 md:p-6">
+            <div class="rounded-sm bg-panel/85 p-4 md:p-5">
+              <figcaption class="flex items-center justify-between border-b border-rule-faint pb-3">
+                <span class="label-mono text-ink-3">Requested artifact</span>
+                <span class="font-mono text-[11px] text-seal-600">404</span>
+              </figcaption>
+              <dl class="mt-3 space-y-2">
+                {rows.map(({ k, v, id }) => (
+                  <div class="flex justify-between gap-4 font-mono text-xs">
+                    <dt class="shrink-0 text-ink-3">{k}</dt>
+                    <dd class="text-right text-ink">
+                      {id ? <span id={id} class="break-all">/</span> : v}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <div class="mt-4 flex items-center justify-between border-t border-rule-faint pt-3">
+                <span class="label-mono text-ink-3">Classification</span>
+                <span class="flex items-center gap-2 border border-seal-100 bg-seal-100/60 px-2 py-0.5 font-mono text-[11px] font-medium tracking-wide text-seal-600">
+                  <span class="size-1.5 rounded-full bg-seal-600"></span>
+                  REJECTED
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- the void seal -->
+          <svg
+            viewBox="0 0 120 120"
+            class="absolute -bottom-10 -left-4 size-32 rotate-[10deg] text-seal-600/90 xl:-left-8"
+            aria-hidden="true"
+          >
+            <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.5"></circle>
+            <circle cx="60" cy="60" r="41" fill="none" stroke="currentColor" stroke-width="1"></circle>
+            <defs>
+              <path id="void-ring" d="M 60,60 m -48,0 a 48,48 0 1,1 96,0 a 48,48 0 1,1 -96,0"></path>
+            </defs>
+            <text fill="currentColor" font-size="9.5" letter-spacing="2.6" font-family="Spline Sans Mono, monospace">
+              <textPath href="#void-ring">NOT FOUND · NO PATH TO ANCHOR ·</textPath>
+            </text>
+            <path d="M38 58 H82" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"></path>
+          </svg>
+        </figure>
+        <p class="mt-10 font-mono text-[11px] text-ink-3">Hard check failed — path existence. Rejected artifacts are not graded.</p>
       </div>
     </div>
   </section>
+
+  <script>
+    document.getElementById('req-path').textContent = location.pathname;
+  </script>
 </Layout>
