@@ -103,8 +103,38 @@ for (const [vw, vh] of [[360, 800], [390, 844], [768, 1024], [1440, 900]]) {
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   for (const route of [...routes, ...standalone]) {
     await page.goto(`http://localhost:${port}${route}`, { waitUntil: 'networkidle' });
-    const sw = await page.evaluate(() => document.documentElement.scrollWidth);
-    if (sw > vw + 1) fail(`overflow ${vw}px ${route} (scrollWidth ${sw})`);
+    // measure steady state: entrance animations can transiently expand the overflow area
+    await page.evaluate(() => {
+      const anims = document.getAnimations().map((a) => a.finished);
+      return Promise.race([Promise.all(anims), new Promise((r) => setTimeout(r, 3000))]);
+    });
+    // visible content extent, not scrollWidth: transform animations leave phantom
+    // scrollable-overflow residue in Chromium, and html{overflow-x:clip} means
+    // nothing beyond the viewport is reachable anyway
+    const extent = await page.evaluate(() => {
+      let maxRight = 0;
+      let minLeft = 0;
+      for (const el of document.querySelectorAll('body *')) {
+        const cs = getComputedStyle(el);
+        if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+        let clipped = false;
+        let anc = el.parentElement;
+        while (anc && anc !== document.body) {
+          if (/(hidden|clip|auto|scroll)/.test(getComputedStyle(anc).overflowX)) {
+            clipped = true;
+            break;
+          }
+          anc = anc.parentElement;
+        }
+        if (clipped) continue;
+        const r = el.getBoundingClientRect();
+        maxRight = Math.max(maxRight, r.right);
+        minLeft = Math.min(minLeft, r.left);
+      }
+      return { maxRight: Math.ceil(maxRight), minLeft: Math.floor(minLeft) };
+    });
+    if (extent.maxRight > vw + 1 || extent.minLeft < -1)
+      fail(`overflow ${vw}px ${route} (content extent ${extent.minLeft}..${extent.maxRight})`);
   }
   for (const e of errors) fail(`console error: ${e.slice(0, 160)}`);
   await page.close();

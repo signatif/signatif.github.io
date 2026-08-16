@@ -123,10 +123,24 @@
 @utility animate-thump {
   animation: thump 0.28s cubic-bezier(0.2, 1.2, 0.3, 1) both;
 }
+/* the seal strikes after the card has risen */
+@utility animate-thump-late {
+  animation: thump 0.28s cubic-bezier(0.2, 1.2, 0.3, 1) 0.55s both;
+}
+
+/* active nav: a 3px ruler-tick underline in the vernier motif */
+@utility tick-underline {
+  background-image: repeating-linear-gradient(90deg, var(--color-azure-600) 0 1px, transparent 1px 10px);
+  background-size: 100% 3px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 4px;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .animate-rise,
-  .animate-thump {
+  .animate-thump,
+  .animate-thump-late {
     animation: none;
   }
 }
@@ -149,7 +163,8 @@
     display: none;
   }
   .animate-rise,
-  .animate-thump {
+  .animate-thump,
+  .animate-thump-late {
     animation: none;
   }
   section {

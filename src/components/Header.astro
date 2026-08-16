@@ -26,7 +26,7 @@ const current = Astro.url.pathname;
           aria-current={current.startsWith(href) ? 'page' : undefined}
           class:list={[
             'transition-colors hover:text-ink',
-            current.startsWith(href) ? 'font-medium text-azure-700' : '',
+            current.startsWith(href) ? 'font-medium text-azure-700 tick-underline' : '',
           ]}
         >
           {label}
