@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import SourceNote from '../components/SourceNote.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Guilloche from '../components/Guilloche.astro';
+import Convergence from '../components/Convergence.astro';
 
 const authorities = [
   {
@@ -191,19 +192,34 @@ const dimensions = [
           meeting on one verifiable record — not from the authority of a
           single signer.
         </p>
-        <p>
-          Artifacts can carry their delegation chain inline for
-          network-free verification, or transparency-log references that a
-          connected verifier resolves and caches on first encounter. The
-          same artifact can be presented as a compact barcode passport with
-          the key fingerprint and validity period for scanning environments.
-        </p>
-        <p class="border-l-2 border-azure-600 pl-4 text-sm text-ink-2">
-          Threshold signing applies at every level: a quorum of key holders
-          exercises a root or delegated authority, eliminating single points
-          of cryptographic compromise.
-        </p>
       </div>
+    </div>
+
+    <figure class="shadow-panel mt-12 rounded-lg border border-rule bg-panel px-6 py-8 md:px-10">
+      <div class="overflow-x-auto">
+        <Convergence />
+      </div>
+      <figcaption class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-rule-faint pt-4">
+        <p class="font-mono text-[11px] text-ink-3">
+          Five independent attestations — one canonical payload. Convergence, not issuer authority.
+        </p>
+        <p class="label-mono text-azure-600">the co-signature model</p>
+      </figcaption>
+    </figure>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-2">
+      <p class="max-w-xl text-ink-2">
+        Artifacts can carry their delegation chain inline for
+        network-free verification, or transparency-log references that a
+        connected verifier resolves and caches on first encounter. The
+        same artifact can be presented as a compact barcode passport with
+        the key fingerprint and validity period for scanning environments.
+      </p>
+      <p class="max-w-xl border-l-2 border-azure-600 pl-4 text-sm text-ink-2">
+        Threshold signing applies at every level: a quorum of key holders
+        exercises a root or delegated authority, eliminating single points
+        of cryptographic compromise.
+      </p>
     </div>
   </section>
 

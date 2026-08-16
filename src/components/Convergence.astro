@@ -1,0 +1,59 @@
+---
+// The artifact, exploded: five independent dimension co-signatures
+// converging on one canonical payload. Static geometry, engraved line style.
+const chips = [
+  { x: 150, y: 90, label: 'authority', note: 'delegation chain' },
+  { x: 610, y: 90, label: 'time', note: 'time authority' },
+  { x: 88, y: 210, label: 'person', note: 'certified operator' },
+  { x: 672, y: 210, label: 'location', note: 'attestation tree' },
+  { x: 380, y: 372, label: 'environment', note: 'sensor co-signature' },
+];
+
+// connector endpoints: from chip edge toward the payload card (280..480 × 160..260)
+const links = [
+  { x1: 228, y1: 96, x2: 316, y2: 166 },
+  { x1: 532, y1: 96, x2: 444, y2: 166 },
+  { x1: 166, y1: 210, x2: 276, y2: 210 },
+  { x1: 594, y1: 210, x2: 484, y2: 210 },
+  { x1: 380, y1: 354, x2: 380, y2: 264 },
+];
+---
+<svg
+  viewBox="0 0 760 420"
+  class="h-auto w-full min-w-[38rem]"
+  role="img"
+  aria-label="Five independent trust dimensions — authority, time, person, location, environment — each leaving a co-signature that converges on one canonical payload."
+>
+  <!-- ruled connectors, tick-dashed -->
+  {links.map(({ x1, y1, x2, y2 }) => (
+    <line x1={x1} y1={y1} x2={x2} y2={y2} class="stroke-azure-600/70" stroke-width="1" stroke-dasharray="1 8" stroke-linecap="round"></line>
+  ))}
+  <!-- end ticks at the payload edge, like measurement pointers -->
+  <line x1="311" y1="160" x2="321" y2="172" class="stroke-azure-600" stroke-width="1.25"></line>
+  <line x1="449" y1="160" x2="439" y2="172" class="stroke-azure-600" stroke-width="1.25"></line>
+  <line x1="270" y1="204" x2="270" y2="216" class="stroke-azure-600" stroke-width="1.25"></line>
+  <line x1="490" y1="204" x2="490" y2="216" class="stroke-azure-600" stroke-width="1.25"></line>
+  <line x1="374" y1="266" x2="386" y2="266" class="stroke-azure-600" stroke-width="1.25"></line>
+
+  <!-- dimension chips -->
+  {chips.map(({ x, y, label, note }) => (
+    <g>
+      <rect x={x - 78} y={y - 18} width="156" height="36" rx="6" class="fill-panel stroke-rule"></rect>
+      <circle cx={x - 62} cy={y} r="3" class="fill-azure-600"></circle>
+      <text x={x - 50} y={y + 1} class="fill-ink font-mono" font-size="11" letter-spacing="1.2">{label}</text>
+      <text x={x - 50} y={y + 12} class="fill-ink-3 font-mono" font-size="8" letter-spacing="0.4">{note}</text>
+    </g>
+  ))}
+
+  <!-- the payload card -->
+  <rect x="280" y="160" width="200" height="100" rx="8" class="fill-panel stroke-azure-600" stroke-width="1.25"></rect>
+  <rect x="288" y="168" width="184" height="84" rx="5" class="fill-none stroke-rule-faint"></rect>
+  <text x="380" y="205" text-anchor="middle" class="fill-ink font-mono" font-size="12" letter-spacing="0.5">canonical payload</text>
+  <text x="380" y="222" text-anchor="middle" class="fill-ink-3 font-mono" font-size="8.5" letter-spacing="0.4">deterministic byte serialization</text>
+
+  <!-- the convergence seal -->
+  <g transform="translate(468 152) rotate(-10)">
+    <circle r="17" class="fill-panel stroke-seal-600" stroke-width="2"></circle>
+    <path d="M-7 0.5 -2.5 5 7 -5.5" class="fill-none stroke-seal-600" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+  </g>
+</svg>
