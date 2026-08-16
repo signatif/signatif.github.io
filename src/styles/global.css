@@ -42,6 +42,8 @@
 @layer base {
   html {
     scroll-padding-top: 5rem;
+    /* decorative bleeds (guilloches, seals) must never open a horizontal scrollbar */
+    overflow-x: clip;
   }
   :focus-visible {
     outline: 2px solid var(--color-azure-600);

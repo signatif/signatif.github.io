@@ -94,7 +94,7 @@ const report = computed(() => [
 
       <p class="label-mono mt-8 text-azure-600">Dimension co-signatures</p>
       <p class="mt-2 text-xs leading-relaxed text-ink-3">Authority always attests via the chain; add dimensions as co-signatures on the same payload.</p>
-      <div class="mt-3 space-y-3">
+      <div class="mt-4 space-y-3">
         <label class="flex cursor-pointer items-center gap-3 text-sm text-ink">
           <input v-model="dims.person" type="checkbox" class="size-4 accent-azure-600" />
           Person — certified operator
@@ -156,7 +156,7 @@ const report = computed(() => [
       </div>
 
       <p class="label-mono mt-8 text-ink-3">Verifier acceptance policy</p>
-      <div class="mt-3 flex w-fit divide-x divide-rule border border-rule">
+      <div class="mt-4 flex w-fit divide-x divide-rule border border-rule">
         <button
           v-for="p in ['standard', 'strict'] as const"
           :key="p"
