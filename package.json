@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "og": "node scripts/gen-og.mjs"
+    "og": "node scripts/gen-og.mjs",
+    "sync-glossary": "node scripts/sync-glossary.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

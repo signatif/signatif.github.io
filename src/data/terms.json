@@ -10,22 +10,37 @@
   {
     "term": "authorization scope",
     "alt": "scope",
-    "def": "multi-dimensional authorization boundary that defines the extent of a trust authority's signing power, carried as a signed field in every certificate and cryptographically enforced at every delegation link"
+    "def": "multi-dimensional authorization boundary that defines the extent of a trust authority's signing power, carried as a signed field in every certificate and cryptographically enforced at every delegation link",
+    "related": [
+      "trust authority"
+    ]
   },
   {
     "term": "authorization scope condition",
     "alt": "scope condition",
-    "def": "executable predicate included in an authorization scope, evaluated at verification time against the content and context of a trusted artifact"
+    "def": "executable predicate included in an authorization scope, evaluated at verification time against the content and context of a trusted artifact",
+    "related": [
+      "authorization scope",
+      "trusted artifact"
+    ]
   },
   {
     "term": "authorization scope dimension",
     "alt": "scope dimension",
-    "def": "one axis of an authorization scope, along which the scope is constrained independently of other dimensions"
+    "def": "one axis of an authorization scope, along which the scope is constrained independently of other dimensions",
+    "related": [
+      "authorization scope"
+    ]
   },
   {
     "term": "authorization scope narrowing",
     "alt": "scope narrowing",
-    "def": "act of constraining one or more authorization scope dimension when delegating from a parent trust authority to a child, such that the child's authorization scope is a subset of the parent's scope on every dimension"
+    "def": "act of constraining one or more authorization scope dimension when delegating from a parent trust authority to a child, such that the child's authorization scope is a subset of the parent's scope on every dimension",
+    "related": [
+      "authorization scope dimension",
+      "trust authority",
+      "authorization scope"
+    ]
   },
   {
     "term": "canonical payload",
@@ -38,12 +53,21 @@
   {
     "term": "ceremony",
     "alt": "signing ceremony",
-    "def": "protocol by which a quorum of key holders cooperates to produce a threshold signing signature, including the procedural, logistical, and cryptographic steps"
+    "def": "protocol by which a quorum of key holders cooperates to produce a threshold signing signature, including the procedural, logistical, and cryptographic steps",
+    "related": [
+      "quorum",
+      "threshold signing"
+    ]
   },
   {
     "term": "classification label",
     "alt": "grade label",
-    "def": "scheme-defined label assigned to a trusted artifact by applying the classification policy to the coverage report, reflecting the artifact's dimensional coverage, authorization scope validity, transparency inclusion, and revocation status"
+    "def": "scheme-defined label assigned to a trusted artifact by applying the classification policy to the coverage report, reflecting the artifact's dimensional coverage, authorization scope validity, transparency inclusion, and revocation status",
+    "related": [
+      "trusted artifact",
+      "dimensional coverage",
+      "authorization scope"
+    ]
   },
   {
     "term": "co-signature",
@@ -67,7 +91,12 @@
   {
     "term": "delegated trust authority",
     "alt": "DTA",
-    "def": "trust authority that has received signing authority through delegation from a parent trust authority and whose authorization scope is a subset of the parent's scope on every authorization scope dimension"
+    "def": "trust authority that has received signing authority through delegation from a parent trust authority and whose authorization scope is a subset of the parent's scope on every authorization scope dimension",
+    "related": [
+      "trust authority",
+      "authorization scope",
+      "authorization scope dimension"
+    ]
   },
   {
     "term": "dimension attestation",
@@ -100,7 +129,7 @@
   {
     "term": "end certificate",
     "alt": "",
-    "def": "credential that authorizes a specific signing key to produce trusted artifact and that carries the narrowest scope in its trust chain",
+    "def": "credential that authorizes a specific signing key to produce trusted artifact and that carries the narrowest authorization scope in its trust chain",
     "related": [
       "trusted artifact",
       "authorization scope",
@@ -110,7 +139,11 @@
   {
     "term": "federated trust authority",
     "alt": "FTA",
-    "def": "delegated trust authority whose members are independent organizations that cooperate under a threshold scheme to produce a single aggregate key"
+    "def": "delegated trust authority whose members are independent organizations that cooperate under a threshold scheme to produce a single aggregate key",
+    "related": [
+      "delegated trust authority",
+      "aggregate key"
+    ]
   },
   {
     "term": "gossip",
@@ -124,7 +157,7 @@
   {
     "term": "inclusion proof",
     "alt": "",
-    "def": "cryptographic proof (typically a Merkle audit path) that a trusted artifact or its end certificate is included in a transparency log",
+    "def": "cryptographic proof (typically a Merkle audit path) that a trusted artifact or its end certificate is included in a transparency log === Transparency",
     "related": [
       "trusted artifact",
       "end certificate",
@@ -134,7 +167,10 @@
   {
     "term": "mirror",
     "alt": "log mirror",
-    "def": "independent operator that replicates a transparency log and serves inclusion proofs and log entries to verifiers"
+    "def": "independent operator that replicates a transparency log and serves inclusion proofs and log entries to verifiers",
+    "related": [
+      "transparency log"
+    ]
   },
   {
     "term": "monotonic narrowing invariant",
@@ -148,7 +184,7 @@
   {
     "term": "multi-log attestation",
     "alt": "",
-    "def": "attestation model in which a trusted artifact or end certificate is included in at least M of K independent transparency log, where M and K are specified by the issuing authority's policy",
+    "def": "attestation model in which a trusted artifact or end certificate is included in at least M of K independent transparency log, where M and K are specified by the issuing authority's policy === Machine-readable projection",
     "related": [
       "trusted artifact",
       "end certificate",
@@ -167,7 +203,7 @@
   {
     "term": "quorum",
     "alt": "",
-    "def": "pair of parameters (T, N) specifying that at least T of N members shall cooperate to produce a valid threshold signing signature",
+    "def": "pair of parameters (T, N) specifying that at least T of N members shall cooperate to produce a valid threshold signing signature === Trust chains and graphs",
     "related": [
       "threshold signing"
     ]
@@ -175,7 +211,11 @@
   {
     "term": "root trust authority",
     "alt": "RTA",
-    "def": "trust authority that serves as the root of a delegation hierarchy and defines the initial authorization scope under which all subordinate authorities operate"
+    "def": "trust authority that serves as the root of a delegation hierarchy and defines the initial authorization scope under which all subordinate authorities operate",
+    "related": [
+      "trust authority",
+      "authorization scope"
+    ]
   },
   {
     "term": "threshold signing",
@@ -188,7 +228,7 @@
   {
     "term": "time key",
     "alt": "",
-    "def": "signing key representing a time authority, used to produce a dimension attestation of type time",
+    "def": "signing key representing a time authority, used to produce a dimension attestation of type time === Verification",
     "related": [
       "dimension attestation"
     ]
@@ -205,7 +245,11 @@
   {
     "term": "trust anchor",
     "alt": "root anchor",
-    "def": "public key of a root trust authority that a verifier accepts as the starting point for verification paths in the trust graph"
+    "def": "public key of a root trust authority that a verifier accepts as the starting point for verification paths in the trust graph",
+    "related": [
+      "root trust authority",
+      "trust graph"
+    ]
   },
   {
     "term": "trust anchor bundle",
@@ -249,7 +293,12 @@
   {
     "term": "trust graph",
     "alt": "trust DAG",
-    "def": "directed acyclic graph of all trust authority and their delegation relationships, generalizing the linear trust chain to admit multiple paths, cross-hierarchy edges, and federated trust authority"
+    "def": "directed acyclic graph of all trust authority and their delegation relationships, generalizing the linear trust chain to admit multiple paths, cross-hierarchy edges, and federated trust authority",
+    "related": [
+      "trust authority",
+      "trust chain",
+      "federated trust authority"
+    ]
   },
   {
     "term": "trust repudiation",
