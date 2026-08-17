@@ -121,11 +121,16 @@ const report = computed(() => [
         </label>
         <div>
           <span class="text-sm text-ink">Time anchor</span>
-          <div class="mt-2 flex w-fit divide-x divide-rule border border-rule">
+          <div
+            class="mt-2 flex w-fit divide-x divide-rule border border-rule"
+            role="group"
+            aria-label="Time anchor"
+          >
             <button
               v-for="t in ['fresh', 'grace', 'stale'] as const"
               :key="t"
               type="button"
+              :aria-pressed="soft.timeAnchor === t"
               class="px-3.5 py-1.5 font-mono text-xs transition-colors"
               :class="soft.timeAnchor === t
                 ? 'bg-azure-700 text-white'
@@ -138,11 +143,16 @@ const report = computed(() => [
         </div>
         <div>
           <span class="text-sm text-ink">Independent roots</span>
-          <div class="mt-2 flex w-fit divide-x divide-rule border border-rule">
+          <div
+            class="mt-2 flex w-fit divide-x divide-rule border border-rule"
+            role="group"
+            aria-label="Independent roots"
+          >
             <button
               v-for="r in [0, 1, 2] as const"
               :key="r"
               type="button"
+              :aria-pressed="soft.roots === r"
               class="px-4 py-1.5 font-mono text-xs transition-colors"
               :class="soft.roots === r
                 ? 'bg-azure-700 text-white'
@@ -156,11 +166,16 @@ const report = computed(() => [
       </div>
 
       <p class="label-mono mt-8 text-ink-3">Verifier acceptance policy</p>
-      <div class="mt-4 flex w-fit divide-x divide-rule border border-rule">
+      <div
+        class="mt-4 flex w-fit divide-x divide-rule border border-rule"
+        role="group"
+        aria-label="Verifier acceptance policy"
+      >
         <button
           v-for="p in ['standard', 'strict'] as const"
           :key="p"
           type="button"
+          :aria-pressed="policy === p"
           class="px-3.5 py-1.5 font-mono text-xs transition-colors"
           :class="policy === p
             ? 'bg-ink text-white'
@@ -190,7 +205,7 @@ const report = computed(() => [
         </div>
       </dl>
 
-      <div class="mt-6 flex items-center justify-between gap-4">
+      <div class="mt-6 flex items-center justify-between gap-4" role="status">
         <span class="label-mono text-ink-3">Classification</span>
         <span
           class="flex items-center gap-2 border px-2.5 py-1 font-mono text-xs font-medium text-ink"
@@ -202,7 +217,7 @@ const report = computed(() => [
       </div>
       <p class="mt-2 text-sm text-ink-2">{{ labelNote[label] }}</p>
 
-      <div class="mt-8 flex items-center justify-between gap-4 border-t-2 border-rule pt-5">
+      <div class="mt-8 flex items-center justify-between gap-4 border-t-2 border-rule pt-5" role="status">
         <p class="font-mono text-xs text-ink-3">
           acceptance policy: {{ policy }}
         </p>
