@@ -2,6 +2,9 @@ import { readFileSync } from 'node:fs';
 import satori from 'satori';
 import sharp from 'sharp';
 
+const { site } = (await import('../astro.config.mjs')).default;
+const HOST = new URL(site).host;
+
 const archivo650 = readFileSync('scripts/fonts/archivo-650-wide.ttf');
 const archivo500 = readFileSync('scripts/fonts/archivo-500-wide.ttf');
 
@@ -143,7 +146,7 @@ function card({ eyebrow, title, subtitle }) {
             style: { display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #C7D3DD', paddingTop: 20, fontSize: 21, color: '#626D79' },
             children: [
               { type: 'div', props: { children: 'SEALED · INTEROPERABLE · GRADUATED · NON-REPUDIABLE · ANCHORED' } },
-              { type: 'div', props: { children: 'www.signatif.org' } },
+              { type: 'div', props: { children: HOST } },
             ],
           },
         },

@@ -6,6 +6,9 @@ import { existsSync, readdirSync, statSync } from 'node:fs';
 import { extname, join, normalize } from 'node:path';
 import { chromium } from 'playwright';
 
+const { site } = (await import('../astro.config.mjs')).default;
+const origin = new URL(site).origin;
+
 const dist = new URL('../dist/', import.meta.url).pathname;
 const port = 4719;
 const failures = [];
@@ -92,6 +95,11 @@ for (const route of [...routes, ...standalone]) {
     linkCount++;
     const file = join(dist, src.split('?')[0]);
     if (!existsSync(file)) fail(`missing asset ${route} → ${src}`);
+  }
+  // declared social cards must exist in the build
+  for (const [, og] of html.matchAll(new RegExp(`property="og:image" content="${origin.replaceAll('/', '\\/')}([^"]+)"`, 'g'))) {
+    linkCount++;
+    if (!existsSync(join(dist, og))) fail(`missing og image ${route} → ${og}`);
   }
 }
 
