@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import terms from '../data/terms.json';
 
+const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+const bySlug = new Map(terms.map((t) => [slug(t.term), t]));
 const letters = [...new Set(terms.map((t) => t.term[0].toUpperCase()))];
 ---
 <Layout
@@ -12,7 +14,7 @@ const letters = [...new Set(terms.map((t) => t.term[0].toUpperCase()))];
   <PageHeader
     eyebrow="Glossary"
     title="The vocabulary of the framework"
-    lede="Every defined term from clause 3 of the standard, in alphabetical order. Alternative names allowed by the standard appear in parentheses."
+    lede="Every defined term from clause 3 of the standard, in alphabetical order. Alternative names allowed by the standard appear in parentheses; related terms are cross-linked as the standard's own definitions reference them."
   />
 
   <section class="mx-auto max-w-6xl px-6 py-14">
@@ -29,13 +31,24 @@ const letters = [...new Set(terms.map((t) => t.term[0].toUpperCase()))];
           <span class="vernier flex-1 text-rule"></span>
         </div>
         <dl class="mt-6 grid gap-x-12 gap-y-7 md:grid-cols-2">
-          {terms.filter((t) => t.term[0].toUpperCase() === l).map(({ term, alt, def }) => (
-            <div class="border-t border-rule-faint pt-4">
+          {terms.filter((t) => t.term[0].toUpperCase() === l).map(({ term, alt, def, related }) => (
+            <div class="scroll-mt-24 border-t border-rule-faint pt-4" id={slug(term)}>
               <dt class="text-[15px] font-semibold text-ink">
                 {term}
                 {alt && <span class="font-normal text-ink-3"> ({alt})</span>}
               </dt>
               <dd class="mt-1.5 text-sm leading-relaxed text-ink-2">{def}</dd>
+              {related && (
+                <dd class="mt-2.5 flex flex-wrap items-baseline gap-x-1.5 font-mono text-[11px] text-ink-3">
+                  <span class="text-rule">→</span>
+                  {related.map((r: string, i: number) => (
+                    <>
+                      {i > 0 && <span class="text-rule-faint">·</span>}
+                      <a href={`#${slug(r)}`} class="text-azure-700 transition-colors hover:text-ink">{r}</a>
+                    </>
+                  ))}
+                </dd>
+              )}
             </div>
           ))}
         </dl>

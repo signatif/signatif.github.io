@@ -2,7 +2,10 @@
   {
     "term": "aggregate key",
     "alt": "",
-    "def": "public key that represents a trust authority, produced either from a single signing key or composed from multiple keys under a threshold scheme"
+    "def": "public key that represents a trust authority, produced either from a single signing key or composed from multiple keys under a threshold scheme",
+    "related": [
+      "trust authority"
+    ]
   },
   {
     "term": "authorization scope",
@@ -27,7 +30,10 @@
   {
     "term": "canonical payload",
     "alt": "",
-    "def": "deterministic byte-string representation of the artifact data that all co-signature attest"
+    "def": "deterministic byte-string representation of the artifact data that all co-signature attest",
+    "related": [
+      "co-signature"
+    ]
   },
   {
     "term": "ceremony",
@@ -42,12 +48,21 @@
   {
     "term": "co-signature",
     "alt": "",
-    "def": "signature on the same canonical payload of a trusted artifact, produced by a signer from an independent trust dimension or an independent trust chain"
+    "def": "signature on the same canonical payload of a trusted artifact, produced by a signer from an independent trust dimension or an independent trust chain",
+    "related": [
+      "canonical payload",
+      "trusted artifact",
+      "trust dimension",
+      "trust chain"
+    ]
   },
   {
     "term": "composite signature",
     "alt": "",
-    "def": "single signature produced by the AND-composition of two or more signature algorithms over the same canonical payload"
+    "def": "single signature produced by the AND-composition of two or more signature algorithms over the same canonical payload",
+    "related": [
+      "canonical payload"
+    ]
   },
   {
     "term": "delegated trust authority",
@@ -57,22 +72,40 @@
   {
     "term": "dimension attestation",
     "alt": "",
-    "def": "co-signature tagged with a trust dimension type, attesting the canonical payload from the perspective of that dimension"
+    "def": "co-signature tagged with a trust dimension type, attesting the canonical payload from the perspective of that dimension",
+    "related": [
+      "co-signature",
+      "trust dimension",
+      "canonical payload"
+    ]
   },
   {
     "term": "dimension convergence",
     "alt": "",
-    "def": "property of a trusted artifact on which multiple trust dimension have attested, each independently verifiable"
+    "def": "property of a trusted artifact on which multiple trust dimension have attested, each independently verifiable",
+    "related": [
+      "trusted artifact",
+      "trust dimension"
+    ]
   },
   {
     "term": "dimensional coverage",
     "alt": "",
-    "def": "set of verified trust dimension attested on a trusted artifact, recorded in the coverage report as input to the classification policy"
+    "def": "set of verified trust dimension attested on a trusted artifact, recorded in the coverage report as input to the classification policy",
+    "related": [
+      "trust dimension",
+      "trusted artifact"
+    ]
   },
   {
     "term": "end certificate",
     "alt": "",
-    "def": "credential that authorizes a specific signing key to produce trusted artifact and that carries the narrowest scope in its trust chain"
+    "def": "credential that authorizes a specific signing key to produce trusted artifact and that carries the narrowest scope in its trust chain",
+    "related": [
+      "trusted artifact",
+      "authorization scope",
+      "trust chain"
+    ]
   },
   {
     "term": "federated trust authority",
@@ -82,12 +115,21 @@
   {
     "term": "gossip",
     "alt": "",
-    "def": "protocol by which independent mirror and verifiers cross-check their views of a transparency log by comparing fingerprints of log state"
+    "def": "protocol by which independent mirror and verifiers cross-check their views of a transparency log by comparing fingerprints of log state",
+    "related": [
+      "mirror",
+      "transparency log"
+    ]
   },
   {
     "term": "inclusion proof",
     "alt": "",
-    "def": "cryptographic proof (typically a Merkle audit path) that a trusted artifact or its end certificate is included in a transparency log"
+    "def": "cryptographic proof (typically a Merkle audit path) that a trusted artifact or its end certificate is included in a transparency log",
+    "related": [
+      "trusted artifact",
+      "end certificate",
+      "transparency log"
+    ]
   },
   {
     "term": "mirror",
@@ -97,22 +139,38 @@
   {
     "term": "monotonic narrowing invariant",
     "alt": "",
-    "def": "property of a delegation chain whereby the child authorization scope is a subset of (or equal to) the parent scope on every authorization scope dimension at every delegation link"
+    "def": "property of a delegation chain whereby the child authorization scope is a subset of (or equal to) the parent scope on every authorization scope dimension at every delegation link",
+    "related": [
+      "authorization scope",
+      "authorization scope dimension"
+    ]
   },
   {
     "term": "multi-log attestation",
     "alt": "",
-    "def": "attestation model in which a trusted artifact or end certificate is included in at least M of K independent transparency log, where M and K are specified by the issuing authority's policy"
+    "def": "attestation model in which a trusted artifact or end certificate is included in at least M of K independent transparency log, where M and K are specified by the issuing authority's policy",
+    "related": [
+      "trusted artifact",
+      "end certificate",
+      "transparency log"
+    ]
   },
   {
     "term": "passport",
     "alt": "",
-    "def": "machine-readable public projection of an end certificate or trusted artifact, optimized for compact storage and rapid presentation (for example, via a two-dimensional barcode)"
+    "def": "machine-readable public projection of an end certificate or trusted artifact, optimized for compact storage and rapid presentation (for example, via a two-dimensional barcode)",
+    "related": [
+      "end certificate",
+      "trusted artifact"
+    ]
   },
   {
     "term": "quorum",
     "alt": "",
-    "def": "pair of parameters (T, N) specifying that at least T of N members shall cooperate to produce a valid threshold signing signature"
+    "def": "pair of parameters (T, N) specifying that at least T of N members shall cooperate to produce a valid threshold signing signature",
+    "related": [
+      "threshold signing"
+    ]
   },
   {
     "term": "root trust authority",
@@ -122,17 +180,27 @@
   {
     "term": "threshold signing",
     "alt": "",
-    "def": "cryptographic protocol in which at least T of N designated key holders cooperate to produce a single aggregate signature under the group's aggregate key, without any individual holder possessing the full signing capability"
+    "def": "cryptographic protocol in which at least T of N designated key holders cooperate to produce a single aggregate signature under the group's aggregate key, without any individual holder possessing the full signing capability",
+    "related": [
+      "aggregate key"
+    ]
   },
   {
     "term": "time key",
     "alt": "",
-    "def": "signing key representing a time authority, used to produce a dimension attestation of type time"
+    "def": "signing key representing a time authority, used to produce a dimension attestation of type time",
+    "related": [
+      "dimension attestation"
+    ]
   },
   {
     "term": "transparency log",
     "alt": "",
-    "def": "append-only, cryptographically verifiable log (typically a Merkle tree) that records all issued end certificate and trusted artifact for public audit"
+    "def": "append-only, cryptographically verifiable log (typically a Merkle tree) that records all issued end certificate and trusted artifact for public audit",
+    "related": [
+      "end certificate",
+      "trusted artifact"
+    ]
   },
   {
     "term": "trust anchor",
@@ -142,22 +210,41 @@
   {
     "term": "trust anchor bundle",
     "alt": "",
-    "def": "self-contained set of trust anchor (root aggregate key or their fingerprints) sufficient for offline verification of any trusted artifact within the bundle's recognized scope"
+    "def": "self-contained set of trust anchor (root aggregate key or their fingerprints) sufficient for offline verification of any trusted artifact within the bundle's recognized scope",
+    "related": [
+      "trust anchor",
+      "aggregate key",
+      "trusted artifact"
+    ]
   },
   {
     "term": "trust authority",
     "alt": "",
-    "def": "entity that holds signing authority within a trust graph under an authorization scope, and is represented by an aggregate key"
+    "def": "entity that holds signing authority within a trust graph under an authorization scope, and is represented by an aggregate key",
+    "related": [
+      "trust graph",
+      "authorization scope",
+      "aggregate key"
+    ]
   },
   {
     "term": "trust chain",
     "alt": "",
-    "def": "ordered sequence of delegations from a root trust authority through one or more delegated trust authority to an end certificate"
+    "def": "ordered sequence of delegations from a root trust authority through one or more delegated trust authority to an end certificate",
+    "related": [
+      "root trust authority",
+      "delegated trust authority",
+      "end certificate"
+    ]
   },
   {
     "term": "trust dimension",
     "alt": "",
-    "def": "independently verifiable aspect of reality attested by a co-signature on a trusted artifact"
+    "def": "independently verifiable aspect of reality attested by a co-signature on a trusted artifact",
+    "related": [
+      "co-signature",
+      "trusted artifact"
+    ]
   },
   {
     "term": "trust graph",
@@ -172,11 +259,23 @@
   {
     "term": "trusted artifact",
     "alt": "",
-    "def": "signed data object produced under the authorization of an end certificate, carrying one or more co-signature from one or more trust dimension"
+    "def": "signed data object produced under the authorization of an end certificate, carrying one or more co-signature from one or more trust dimension",
+    "related": [
+      "end certificate",
+      "co-signature",
+      "trust dimension"
+    ]
   },
   {
     "term": "verification pipeline",
     "alt": "",
-    "def": "ordered sequence of checks applied to a trusted artifact, including signature validation, trust chain or trust graph path-finding, authorization scope enforcement, transparency log inclusion proof, revocation status, coverage report production, and classification policy application"
+    "def": "ordered sequence of checks applied to a trusted artifact, including signature validation, trust chain or trust graph path-finding, authorization scope enforcement, transparency log inclusion proof, revocation status, coverage report production, and classification policy application",
+    "related": [
+      "trusted artifact",
+      "trust chain",
+      "trust graph",
+      "authorization scope",
+      "transparency log"
+    ]
   }
 ]
