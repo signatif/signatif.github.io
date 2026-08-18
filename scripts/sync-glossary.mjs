@@ -3,9 +3,12 @@
 //   npm run sync-glossary
 // Fetches the current source from CalConnect/cc-signatif main.
 const SPEC_URL =
-  'https://raw.githubusercontent.com/CalConnect/cc-signatif/main/spec/signatif-standard/sections/03-terms.adoc';
+  'https://raw.githubusercontent.com/CalConnect/cc-signatif/main/sources/sections/03-terms.adoc';
 
-const src = await (await fetch(SPEC_URL)).text();
+const res = await fetch(SPEC_URL);
+if (!res.ok) throw new Error(`fetching ${SPEC_URL} failed: ${res.status} — not syncing`);
+const src = await res.text();
+if (!src.includes('==== ')) throw new Error('terms clause did not parse — not syncing');
 
 const blocks = src.split(/^==== /m).slice(1);
 const entries = [];
