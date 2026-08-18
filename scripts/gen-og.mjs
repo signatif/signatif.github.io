@@ -87,6 +87,12 @@ const PAGES = [
     subtitle: 'Every defined term from clause 3 of the standard, from trust authorities to classification labels.',
   },
   {
+    file: 'og/implementations.png',
+    eyebrow: 'IMPLEMENTATIONS',
+    title: 'Requirements, not products',
+    subtitle: 'Conformance classes make claims testable. Listings state claims; they do not certify them.',
+  },
+  {
     file: 'og/about.png',
     eyebrow: 'ABOUT',
     title: 'From Latin signare — to mark with a seal',
