@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
+
+<Layout
+  title="Implementations — Signatif"
+  description="Implementations of the Signatif framework. The standard defines requirements and conformance classes; any implementation satisfying them may be listed."
+>
+  <PageHeader
+    eyebrow="Implementations"
+    title="Implementations of the framework"
+    lede="The standard defines requirements and conformance classes, not products. An implementation claims conformance to the classes it satisfies, witnessed by tests. Listing here is informational and does not imply endorsement, certification, or preference."
+  />
+
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="max-w-2xl space-y-5 leading-relaxed text-ink-2">
+      <p>
+        Signatif is implementation-neutral by design: every requirement
+        class carries a matching conformance class so that "conforming
+        implementation" is a testable claim, not a vendor assertion.
+        Schemes and adopters choose implementations freely — including
+        building their own.
+      </p>
+    </div>
+
+    <div class="mt-10 space-y-6">
+      <article class="shadow-panel rounded-lg border border-rule bg-panel p-8">
+        <div class="flex flex-wrap items-baseline justify-between gap-3">
+          <h2 class="expanded text-2xl font-semibold text-ink">Confium</h2>
+          <span class="label-mono rounded-full border border-rule px-3 py-1 text-xs text-ink-3">
+            Rust · browser/WASM · HTTP · CLI · Python
+          </span>
+        </div>
+        <p class="mt-4 max-w-3xl leading-relaxed text-ink-2">
+          An open-source framework for multi-stakeholder threshold
+          cryptography that implements the Signatif layer on top of its
+          trust-graph, transparency, threshold-signing, and PKI
+          components. Claims all 24 conformance classes, publishes a
+          machine-generated conformance report guarded by CI, and
+          ships an abstract-test-suite witness alongside scheme
+          adoption tooling (registries, deployment manifests,
+          multi-surface verification).
+        </p>
+        <ul class="mt-4 grid gap-2 text-sm text-ink-2 sm:grid-cols-2">
+          <li>— Co-signed, multi-dimensional trusted artifacts</li>
+          <li>— Graduated verification pipeline with coverage reports</li>
+          <li>— Scheme-maintained registries, published and loadable</li>
+          <li>— JWS/JCS, COSE, and XMLDSig/Exc-C14N format profiles</li>
+          <li>— Classical, ML-DSA, SLH-DSA, and composite algorithms</li>
+          <li>— Hierarchical, federated, cross-recognized, mesh topologies</li>
+        </ul>
+        <div class="mt-6 flex flex-wrap gap-6 text-sm">
+          <a
+            href="https://www.confium.org"
+            class="font-medium text-azure-700 transition-colors hover:text-azure-800"
+          >
+            confium.org →
+          </a>
+          <a
+            href="https://github.com/confium/confium"
+            class="font-medium text-azure-700 transition-colors hover:text-azure-800"
+          >
+            Source →
+          </a>
+          <a
+            href="https://docs.rs/confium-signatif"
+            class="font-medium text-azure-700 transition-colors hover:text-azure-800"
+          >
+            API documentation →
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-12 border-l-2 border-seal-600 pl-5">
+      <p class="expanded text-lg font-semibold text-ink">Getting listed</p>
+      <p class="mt-2 max-w-2xl leading-relaxed text-ink-2">
+        Any implementation satisfying one or more conformance classes
+        may be listed. Open an issue or pull request against the site
+        repository with the implementation's name, the classes claimed,
+        and where the claims are witnessed (test suite, conformance
+        report, or both). Listings state claims; they do not certify
+        them — verification remains the reader's and the scheme's.
+      </p>
+    </div>
+  </section>
+</Layout>
