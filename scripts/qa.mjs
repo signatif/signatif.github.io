@@ -9,6 +9,11 @@ import { chromium } from 'playwright';
 const { site } = (await import('../astro.config.mjs')).default;
 const origin = new URL(site).origin;
 
+setTimeout(() => {
+  console.error('QA watchdog: exceeded 10 minutes — aborting');
+  process.exit(1);
+}, 10 * 60 * 1000).unref?.();
+
 const dist = new URL('../dist/', import.meta.url).pathname;
 const port = 4719;
 const failures = [];
@@ -110,7 +115,7 @@ for (const [vw, vh] of [[360, 800], [390, 844], [768, 1024], [1440, 900]]) {
   const errors = [];
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
   for (const route of [...routes, ...standalone]) {
-    await page.goto(`http://localhost:${port}${route}`, { waitUntil: 'networkidle' });
+    await page.goto(`http://localhost:${port}${route}`, { waitUntil: 'networkidle', timeout: 30_000 });
     // measure steady state: entrance animations can transiently expand the overflow area
     await page.evaluate(() => {
       const anims = document.getAnimations().map((a) => a.finished);
