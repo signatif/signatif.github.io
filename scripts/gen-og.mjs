@@ -66,7 +66,7 @@ const PAGES = [
     file: 'og/requirements.png',
     eyebrow: 'REQUIREMENTS',
     title: 'The registry of requirements classes',
-    subtitle: '116 requirements across 14 classes, each paired with a conformance class and abstract test.',
+    subtitle: '117 requirements across 14 classes, each paired with a conformance class and abstract test.',
   },
   {
     file: 'og/schemes.png',
