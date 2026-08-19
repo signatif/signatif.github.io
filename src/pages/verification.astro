@@ -160,7 +160,7 @@ decision = accept(label)   # verifier policy</code></pre>
       <div>
         <h3 class="text-[15px] font-semibold text-ink">Time freshness</h3>
         <p class="mt-2 text-sm leading-relaxed text-ink-2">
-          A configurable freshness window governs time attestations.
+          A configurable freshness window governs time attestations — declared in the deployment manifest, evaluated over UTC timestamps, with a clock-skew tolerance.
           Attestations outside the window are rejected; those within a
           secondary grace period may be accepted at a downgraded label, as
           the acceptance policy decides. Freshness parameters live in the

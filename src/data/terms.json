@@ -203,7 +203,7 @@
   {
     "term": "quorum",
     "alt": "",
-    "def": "pair of parameters (T, N) specifying that at least T of N members shall cooperate to produce a valid threshold signing signature === Trust chains and graphs",
+    "def": "pair of parameters (T, N) specifying the number of members of a threshold group that are needed to produce a valid threshold signing signature === Trust chains and graphs",
     "related": [
       "threshold signing"
     ]
@@ -216,6 +216,11 @@
       "trust authority",
       "authorization scope"
     ]
+  },
+  {
+    "term": "scheme",
+    "alt": "",
+    "def": "organization that instantiates this framework for a domain by maintaining its registries, defining scope dimensions and classification policies, and publishing a deployment manifest"
   },
   {
     "term": "threshold signing",
@@ -299,6 +304,11 @@
       "trust chain",
       "federated trust authority"
     ]
+  },
+  {
+    "term": "trust infrastructure",
+    "alt": "",
+    "def": "shared set of trust anchors, transparency logs, and registries that multiple applications rely on when verifying artifacts"
   },
   {
     "term": "trust repudiation",
