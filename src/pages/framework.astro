@@ -46,7 +46,7 @@ const dimensions = [
   { term: 'Time', text: 'When it was produced — anchored to an independent time source, not the signer’s clock.' },
   { term: 'Location', text: 'Where it was produced — backed by its own attestation tree.' },
   { term: 'Environment', text: 'Under what conditions — temperature, process state, or other scheme-defined context.' },
-  { term: 'Extensible', text: 'Schemes define further dimensions; each becomes a cryptographic co-signature, not metadata.' },
+  { term: 'Extensible', text: 'The set of dimensions is registry-driven and open: eight are registered — authority, person, time, location, environment, authorization, identity, oracle — and schemes register more. Every dimension, built-in or added, is the same thing: a co-signature over the canonical payload, verified by the same pipeline. Registered dimensions are never redefined.' },
 ];
 ---
 <Layout
@@ -201,7 +201,7 @@ const dimensions = [
       </div>
       <figcaption class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-rule-faint pt-4">
         <p class="font-mono text-[11px] text-ink-3">
-          Five independent attestations — one canonical payload. Convergence, not issuer authority.
+          Five attestations shown — the registry defines the set, and schemes may register further dimensions; each is the same co-signature mechanism.
         </p>
         <p class="label-mono text-azure-600">the co-signature model</p>
       </figcaption>
