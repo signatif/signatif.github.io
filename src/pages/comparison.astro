@@ -39,7 +39,7 @@ const scenarios = [
       },
       {
         tech: 'Blockchain attestation',
-        text: 'Verification means reconciling with the ledger — a network round trip, a synced node, and an operator still in business. Offline verification is not the model.',
+        text: 'Verification means reconciling with the ledger — a network round trip, a synced node, and an operator still in business. Offline verification is outside its design case.',
       },
       {
         tech: 'Code-signing transparency',
@@ -100,7 +100,7 @@ const matrix = {
   rows: [
     {
       capability: 'Authorization boundary',
-      cells: ['Policy-defined; not verifiable from the certificate', 'Ecosystem policy', 'None — membership replaces scope', 'Issuer-asserted', 'Cryptographic scope, hard check at every link'],
+      cells: ['Policy-defined; not verifiable from the certificate', 'Ecosystem policy', 'Out of scope — membership model', 'Issuer-asserted', 'Cryptographic scope, hard check at every link'],
     },
     {
       capability: 'Attestations per object',
@@ -120,7 +120,7 @@ const matrix = {
     },
     {
       capability: 'Revocation reach',
-      cells: ['The certificate', 'N/A for this purpose', 'None — append-only', 'The credential', 'Propagates to all transitively bound artifacts'],
+      cells: ['The certificate', 'Not applicable here', 'Out of scope — append-only', 'The credential', 'Propagates to all transitively bound artifacts'],
     },
     {
       capability: 'Time evidence',
@@ -132,7 +132,7 @@ const matrix = {
     },
     {
       capability: 'Offline verification',
-      cells: ['Awkward; freshness-sensitive', 'Not the model', 'No — needs the ledger', 'Possible for proofs only', 'First-class: same label except freshness'],
+      cells: ['Freshness-sensitive; not the design case', 'Not the design case', 'Requires the ledger', 'Possible for proofs only', 'First-class: same label except freshness'],
     },
     {
       capability: 'Cross-domain recognition',
@@ -163,8 +163,8 @@ const hardForPki = [
 >
   <PageHeader
     eyebrow="Comparison"
-    title="Where the incumbents stop, and why"
-    lede="This comparison follows the standard’s own informative annexes — and it cuts both ways. PKI remains the right tool for TLS and web identity. What follows is the regulated-artifact problem, where each incumbent hits a design boundary rather than an implementation bug."
+    title="Different designs, different jobs — and what Signatif adds"
+    lede="This comparison follows the standard’s own informative annexes — and it cuts both ways. PKI remains the right tool for TLS and web identity, and each technology below is mature for the problem it was designed to solve. What follows asks a different question: the regulated-artifact problem, where the difference is one of design intent, not implementation quality."
   />
 
   <!-- scenarios -->
@@ -181,7 +181,7 @@ const hardForPki = [
           {attempts.map(({ tech, text }) => (
             <div class="rounded-lg border border-rule-faint bg-panel p-6">
               <p class="flex items-center gap-2.5 text-[13px] font-semibold text-ink">
-                <span class="text-seal-600">✗</span>
+                <span class="text-ink-3">·</span>
                 {tech}
               </p>
               <p class="mt-2.5 text-sm leading-relaxed text-ink-2">{text}</p>
